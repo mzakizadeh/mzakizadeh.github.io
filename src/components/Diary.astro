@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+
+const entries = (await getCollection("diary")).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<div class="diary">
+    <ul>
+        {
+            entries.map((entry) => (
+                <li>
+                    <span class="date">
+                        {new Intl.DateTimeFormat("en", {
+                            month: "short",
+                        }).format(entry.data.date)}
+                        {new Intl.DateTimeFormat("en", {
+                            year: "numeric",
+                        }).format(entry.data.date)}
+                    </span>
+                    <span class="entry">{entry.body}</span>
+                </li>
+            ))
+        }
+    </ul>
+    <a href="/archive/diary">
+        <span>&rarr;</span>
+        Diary Archive
+    </a>
+</div>
+<style>
+    .diary {
+        margin-bottom: 3rem;
+    }
+    .diary ul {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        text-align: justify;
+        list-style: none;
+        margin-left: 0;
+        padding: 0;
+    }
+    .diary ul li {
+        font-size: 1rem;
+        display: flex;
+        flex-direction: rows;
+        align-items: center;
+        padding-bottom: 0.5rem;
+    }
+    .diary ul li .date {
+        min-width: 7rem;
+        font-size: 1rem;
+    }
+    .diary a {
+        padding-left: 7rem;
+        font-size: 1rem;
+    }
+</style>
