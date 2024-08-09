@@ -15,18 +15,48 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 				>mzakizadeh.me@gmail.com</a
 			>.
 		</p>
-		<ul role="list" class="link-card-grid">
+		<div class="diary">
+			<ul>
+				<li>
+					<span class="date">Nov 2024</span>
+					<span class="entry">
+						Excited to share that my paper on adversarial training
+						in NLP got accepted to EMNLP 2024.
+					</span>
+				</li>
+				<li>
+					<span class="date">Jan 2025</span>
+					<span class="entry">
+						I recently joined the <strong
+							>Stony Brook University</strong
+						> for my PhD journey, EXCITED!
+					</span>
+				</li>
+				<li>
+					<span class="date">Oct 2024</span>
+					<span class="entry">
+						I’ll be presenting my research on low-resource language
+						models at NAACL 2025. Looking forward to it!
+					</span>
+				</li>
+			</ul>
+			<a href="/archive/diary">
+				<span>&rarr;</span>
+				Diary Archive
+			</a>
+		</div>
+		<!-- <ul role="list" class="link-card-grid">
 			<LinkCard
 				href="https://docs.astro.build/"
-				title="DiFair"
-				body="DiFair presents a nuanced benchmark for assessing gender bias and knowledge retention in PLMs."
+				title="DiFair Metric"
+				body="A nuanced benchmark for assessing gender bias and knowledge in PLMs."
 			/>
 			<LinkCard
 				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
+				title="TweetFa Dataset"
+				body="Large scale twitter corpus containing +20M high quality persian tweets."
 			/>
-		</ul>
+		</ul> -->
 	</main>
 </Layout>
 
@@ -65,7 +95,7 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 	}
 	.introduction {
 		text-align: justify;
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 		border: 1px solid rgba(var(--accent-light), 25%);
 		background: linear-gradient(
 			rgba(var(--accent-dark), 66%),
@@ -84,6 +114,30 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 	}
 	.introduction strong {
 		color: rgb(var(--accent-light));
+	}
+	.diary {
+		margin-bottom: 3rem;
+	}
+	.diary ul {
+		margin-bottom: 0;
+		padding-bottom: 0;
+		text-align: justify;
+		list-style: none;
+		margin-left: 0;
+		padding: 0;
+	}
+	.diary ul li {
+		display: flex;
+		flex-direction: rows;
+		align-items: center;
+		padding-bottom: 1rem;
+	}
+	.diary ul li .date {
+		min-width: 8rem;
+		font-size: 1rem;
+	}
+	.diary a {
+		padding-left: 8rem;
 	}
 	.link-card-grid {
 		display: grid;
