@@ -2,14 +2,13 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import LinkCard from "../components/LinkCard.astro";
-import NewsBlock from "../components/NewsBlock.astro";
 import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 ---
 
 <Layout title={MY_NAME} description={SITE_DESCRIPTION}>
 	<main>
 		<Header />
-		<p class="instructions">
+		<p class="introduction">
 			I'm an NLP enthusiast with two years of research experience in the
 			field, and a passionate gamer with a love for 4X games. Feel free to
 			reach out at <a href="mailto:mzakizadeh.me@gmail.com"
@@ -64,7 +63,7 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 		background-size: 400%;
 		background-position: 0%;
 	}
-	.instructions {
+	.introduction {
 		text-align: justify;
 		margin-bottom: 2rem;
 		border: 1px solid rgba(var(--accent-light), 25%);
@@ -75,7 +74,7 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 		padding: 1.5rem;
 		border-radius: 8px;
 	}
-	.instructions code {
+	.introduction code {
 		font-size: 0.8em;
 		font-weight: bold;
 		background: rgba(var(--accent-light), 12%);
@@ -83,7 +82,7 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 		border-radius: 4px;
 		padding: 0.3em 0.4em;
 	}
-	.instructions strong {
+	.introduction strong {
 		color: rgb(var(--accent-light));
 	}
 	.link-card-grid {
