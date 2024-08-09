@@ -8,13 +8,20 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 <Layout title={MY_NAME} description={SITE_DESCRIPTION}>
 	<main>
 		<Header />
-		<p class="introduction">
-			I'm an NLP enthusiast with two years of research experience in the
-			field, and a passionate gamer with a love for 4X games. Feel free to
-			reach out at <a href="mailto:mzakizadeh.me@gmail.com"
-				>mzakizadeh.me@gmail.com</a
-			>.
-		</p>
+		<div class="introduction">
+			<div class="avatar">
+				<img src="images/mzakizadeh-2022-12-08.jpg" />
+			</div>
+			<h1><a href="/">{MY_NAME}</a></h1>
+			<p class="introduction">
+				I'm an NLP enthusiast with two years of research experience in
+				the field, and a passionate gamer with a love for 4X games. Feel
+				free to reach out at
+				<a href="mailto:mzakizadeh.me@gmail.com">
+					mzakizadeh.me@gmail.com</a
+				>.
+			</p>
+		</div>
 		<div class="diary">
 			<ul>
 				<li>
@@ -61,14 +68,26 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 </Layout>
 
 <style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
+	h1 {
+		display: block;
+		text-align: center;
+		margin: 0;
+		font-size: 3rem;
 		color: white;
-		font-size: 20px;
-		line-height: 1.6;
+		font-weight: 500;
+	}
+	h1 a,
+	h1 a.active {
+		color: white;
+		text-decoration: none;
+	}
+	.avatar img {
+		margin: 1rem 0 1.2rem;
+		width: 8rem;
+		height: 8rem;
+		display: block;
+		background-color: white;
+		border-radius: 100%;
 	}
 	.astro-a {
 		position: absolute;
@@ -79,13 +98,6 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 		height: auto;
 		z-index: -1;
 	}
-	h1 {
-		font-size: 4rem;
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-		margin-bottom: 1em;
-	}
 	.text-gradient {
 		background-image: var(--accent-gradient);
 		-webkit-background-clip: text;
@@ -94,6 +106,12 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 		background-position: 0%;
 	}
 	.introduction {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.introduction p {
+		display: block;
 		text-align: justify;
 		margin-bottom: 1rem;
 		border: 1px solid rgba(var(--accent-light), 25%);

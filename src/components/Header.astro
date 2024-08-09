@@ -13,47 +13,18 @@ import { MY_NAME, NAV_LINKS } from "../consts";
             ))
         }
     </nav>
-    <div class="avatar">
-        <img src="images/mzakizadeh-2022-12-08.jpg" />
-    </div>
-    <h1><a href="/">{MY_NAME}</a></h1>
 </header>
 
 <style>
     header {
-        margin: 0;
+        margin: 0 0 3rem;
         padding: 0 1em;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-
     header a {
         letter-spacing: 1px;
-    }
-
-    h1 {
-        display: block;
-        text-align: center;
-        margin: 0;
-        font-size: 3rem;
-        color: white;
-        font-weight: 500;
-    }
-
-    .avatar img {
-        margin: 3rem 0 1.2rem;
-        width: 8rem;
-        height: 8rem;
-        display: block;
-        background-color: white;
-        border-radius: 100%;
-    }
-
-    h1 a,
-    h1 a.active {
-        color: white;
-        text-decoration: none;
     }
     nav {
         display: flex;
@@ -70,7 +41,7 @@ import { MY_NAME, NAV_LINKS } from "../consts";
     }
     nav a.active {
         font-weight: bolder;
-        text-decoration: underline;
+        text-decoration: none;
     }
     .social-links,
     .social-links a {

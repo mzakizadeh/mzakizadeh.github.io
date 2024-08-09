@@ -5,6 +5,8 @@ export const MY_NAME = 'Mahdi Zakizadeh';
 export const SITE_DESCRIPTION = "I'm Mahdi Zakizadeh and I work on Natural Language Processing. More details inside!";
 export const NAV_LINKS = [
     { 'name': 'Blog', 'to': '/blog' },
+    // { 'name': 'Projects', 'to': '/projects' },
+    { 'name': 'CV', 'to': '/files/zakizadeh.pdf' },
     { 'name': 'Github', 'to': 'https://github.com/mzakizadeh' },
     { 'name': 'Linkedin', 'to': 'https://linkedin.com/mahdizakizadeh' },
 ]
