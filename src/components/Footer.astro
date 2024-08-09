@@ -1,0 +1,30 @@
+---
+import HeaderLink from "./HeaderLink.astro";
+---
+
+<footer>
+    <hr />
+    <span>Last Updated on Aug 2024</span>
+    <span>
+        Built with <a href="http://astro.build">Astro</a>
+    </span>
+</footer>
+
+<style>
+    footer {
+        font-size: 0.75rem;
+        margin: 0 0 3rem;
+        padding: 0 1em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #e9e9e9;
+        letter-spacing: 1px;
+    }
+    footer hr {
+        background-color: rgba(255, 255, 255, 0.3);
+        width: 780px;
+        height: 1px;
+        margin: 2rem 0 2rem;
+    }
+</style>

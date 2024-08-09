@@ -45,7 +45,7 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 				Diary Archive
 			</a>
 		</div>
-		<!-- <ul role="list" class="link-card-grid">
+		<ul role="list" class="link-card-grid">
 			<LinkCard
 				href="https://docs.astro.build/"
 				title="DiFair Metric"
@@ -56,7 +56,7 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 				title="TweetFa Dataset"
 				body="Large scale twitter corpus containing +20M high quality persian tweets."
 			/>
-		</ul> -->
+		</ul>
 	</main>
 </Layout>
 
@@ -127,17 +127,19 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 		padding: 0;
 	}
 	.diary ul li {
+		font-size: 1rem;
 		display: flex;
 		flex-direction: rows;
 		align-items: center;
-		padding-bottom: 1rem;
+		padding-bottom: 0.5rem;
 	}
 	.diary ul li .date {
-		min-width: 8rem;
+		min-width: 7rem;
 		font-size: 1rem;
 	}
 	.diary a {
-		padding-left: 8rem;
+		padding-left: 7rem;
+		font-size: 1rem;
 	}
 	.link-card-grid {
 		display: grid;
