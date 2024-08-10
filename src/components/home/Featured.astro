@@ -1,0 +1,21 @@
+---
+import { getCollection } from "astro:content";
+
+import FeaturedCard from "./FeaturedCard.astro";
+
+const featured = await getCollection("featured");
+---
+
+{
+    featured.length > 0 && (
+        <ul role="list" class="link-card-grid">
+            {featured.map((item) => (
+                <FeaturedCard
+                    href={item.data.href}
+                    title={item.data.title}
+                    body={item.data.body}
+                />
+            ))}
+        </ul>
+    )
+}

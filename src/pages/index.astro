@@ -1,13 +1,9 @@
 ---
-import { getCollection } from "astro:content";
-
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/base/Header.astro";
-import FeaturedCard from "../components/home/FeaturedCard.astro";
+import Featured from "../components/home/Featured.astro";
 import Diary from "../components/home/Diary.astro";
 import { MY_NAME, SITE_DESCRIPTION } from "../consts";
-
-const featured = await getCollection("featured");
 ---
 
 <Layout title={MY_NAME} description={SITE_DESCRIPTION}>
@@ -28,17 +24,7 @@ const featured = await getCollection("featured");
 			</p>
 		</div>
 		<Diary />
-		<ul role="list" class="link-card-grid">
-			{
-				featured.map((item) => (
-					<FeaturedCard
-						href={item.data.href}
-						title={item.data.title}
-						body={item.data.body}
-					/>
-				))
-			}
-		</ul>
+		<Featured />
 	</main>
 </Layout>
 
