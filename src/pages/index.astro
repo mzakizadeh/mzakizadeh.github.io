@@ -1,8 +1,13 @@
 ---
+import { getCollection } from "astro:content";
+
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-import LinkCard from "../components/LinkCard.astro";
+import Header from "../components/base/Header.astro";
+import FeaturedCard from "../components/home/FeaturedCard.astro";
+import Diary from "../components/home/Diary.astro";
 import { MY_NAME, SITE_DESCRIPTION } from "../consts";
+
+const featured = await getCollection("featured");
 ---
 
 <Layout title={MY_NAME} description={SITE_DESCRIPTION}>
@@ -22,47 +27,17 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 				>.
 			</p>
 		</div>
-		<div class="diary">
-			<ul>
-				<li>
-					<span class="date">Nov 2024</span>
-					<span class="entry">
-						Excited to share that my paper on adversarial training
-						in NLP got accepted to EMNLP 2024.
-					</span>
-				</li>
-				<li>
-					<span class="date">Jan 2025</span>
-					<span class="entry">
-						I recently joined the <strong
-							>Stony Brook University</strong
-						> for my PhD journey, EXCITED!
-					</span>
-				</li>
-				<li>
-					<span class="date">Oct 2024</span>
-					<span class="entry">
-						I’ll be presenting my research on low-resource language
-						models at NAACL 2025. Looking forward to it!
-					</span>
-				</li>
-			</ul>
-			<a href="/archive/diary">
-				<span>&rarr;</span>
-				Diary Archive
-			</a>
-		</div>
+		<Diary />
 		<ul role="list" class="link-card-grid">
-			<LinkCard
-				href="https://docs.astro.build/"
-				title="DiFair Metric"
-				body="A nuanced benchmark for assessing gender bias and knowledge in PLMs."
-			/>
-			<LinkCard
-				href="https://astro.build/integrations/"
-				title="TweetFa Dataset"
-				body="Large scale twitter corpus containing +20M high quality persian tweets."
-			/>
+			{
+				featured.map((item) => (
+					<FeaturedCard
+						href={item.data.href}
+						title={item.data.title}
+						body={item.data.body}
+					/>
+				))
+			}
 		</ul>
 	</main>
 </Layout>

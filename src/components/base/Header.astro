@@ -1,6 +1,8 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
-import { MY_NAME, NAV_LINKS } from "../consts";
+import { MY_NAME, NAV_LINKS } from "../../consts";
+
+const { pathname } = Astro.url;
 ---
 
 <header>
@@ -40,7 +42,7 @@ import { MY_NAME, NAV_LINKS } from "../consts";
         text-transform: uppercase;
     }
     nav a.active {
-        font-weight: bolder;
+        /* font-weight: bolder; */
         text-decoration: none;
     }
     .social-links,

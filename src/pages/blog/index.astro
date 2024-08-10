@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Header from "../../components/Header.astro";
+import Header from "../../components/base/Header.astro";
 import FormattedDate from "../../components/blog/FormattedDate.astro";
 import { getCollection } from "astro:content";
 import { MY_NAME, SITE_DESCRIPTION } from "../../consts";
@@ -40,6 +40,9 @@ const posts = (await getCollection("blog")).sort(
 <style>
     main {
         width: 960px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     .posts {
         margin: 0 0 1rem;

@@ -1,13 +1,13 @@
 import { defineCollection, z } from 'astro:content';
 
-const diary = defineCollection({
+const diaryCollection = defineCollection({
     type: 'content',
     schema: z.object({
         date: z.coerce.date(),
     }),
 });
 
-const blog = defineCollection({
+const blogCollection = defineCollection({
     type: 'content',
     // Type-check frontmatter using a schema
     schema: z.object({
@@ -20,4 +20,18 @@ const blog = defineCollection({
     }),
 });
 
-export const collections = { diary, blog };
+const featuredCollection = defineCollection({
+    type: 'data',
+    schema: z.object({
+        title: z.string(),
+        body: z.string(),
+        href: z.string(),
+        image: z.string().optional(),
+    }),
+});
+
+export const collections = {
+    'diary': diaryCollection,
+    'blog': blogCollection,
+    'featured': featuredCollection,
+};

@@ -4,30 +4,44 @@ import { getCollection } from "astro:content";
 const entries = (await getCollection("diary")).sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
+
+const N = 5;
+
+const renderedEntries = await Promise.all(
+    entries.slice(0, N).map(async (entry) => {
+        const { Content } = await entry.render();
+        return {
+            ...entry,
+            renderedBody: Content,
+        };
+    }),
+);
 ---
 
 <div class="diary">
     <ul>
         {
-            entries.map((entry) => (
+            renderedEntries.map((entry) => (
                 <li>
                     <span class="date">
                         {new Intl.DateTimeFormat("en", {
                             month: "short",
-                        }).format(entry.data.date)}
-                        {new Intl.DateTimeFormat("en", {
                             year: "numeric",
                         }).format(entry.data.date)}
                     </span>
-                    <span class="entry">{entry.body}</span>
+                    <entry.renderedBody />
                 </li>
             ))
         }
     </ul>
-    <a href="/archive/diary">
-        <span>&rarr;</span>
-        Diary Archive
-    </a>
+    {
+        entries.length > N && (
+            <a href="/archive/diary">
+                <span>&rarr;</span>
+                Diary Archive
+            </a>
+        )
+    }
 </div>
 <style>
     .diary {
@@ -47,6 +61,7 @@ const entries = (await getCollection("diary")).sort(
         flex-direction: rows;
         align-items: center;
         padding-bottom: 0.5rem;
+        margin-bottom: -1rem;
     }
     .diary ul li .date {
         min-width: 7rem;
