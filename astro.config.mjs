@@ -1,10 +1,19 @@
 import { defineConfig } from 'astro/config';
 import { toString } from 'mdast-util-to-string';
+import { execSync } from "child_process";
 
 import preact from "@astrojs/preact";
 import getReadingTime from 'reading-time';
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+
+export function remarkModifiedTime() {
+  return function (tree, file) {
+    const filepath = file.history[0];
+    const result = execSync(`git log -1 --pretty="format:%cI" "${filepath}"`);
+    file.data.astro.frontmatter.lastModified = result.toString();
+  };
+}
 
 export function remarkReadingTime() {
   return function (tree, { data }) {
@@ -21,6 +30,6 @@ export default defineConfig({
   site: 'https://example.com',
   integrations: [preact(), mdx(), sitemap()],
   markdown: {
-    remarkPlugins: [remarkReadingTime],
+    remarkPlugins: [remarkModifiedTime, remarkReadingTime],
   },
 });
