@@ -12,6 +12,8 @@
             rgb(var(--accent)),
             rgb(var(--accent-dark)) 30%,
             white 60%);
+    --page-width: 1020px;
+    --content-width: 720px;
 }
 
 ::-moz-selection {
@@ -53,10 +55,32 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0 0 0.5rem 0;
+    margin: 0 auto 0.5rem auto;
     color: rgb(var(--black));
     line-height: 1.2;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p:not(:has(img)),
+blockquote,
+pre,
+ul,
+ol,
+li {
+    margin-left: auto;
+    margin-right: auto;
+    width: var(--content-width);
+}
+
+p:has(img) {
+    text-align: center;
+}
+
 
 h1 {
     font-size: 2.852em;
@@ -136,7 +160,6 @@ pre>code {
 blockquote {
     border-left: 4px solid var(--accent);
     padding: 0 0 0 20px;
-    margin: 0px;
     font-size: 1.333em;
 }
 
