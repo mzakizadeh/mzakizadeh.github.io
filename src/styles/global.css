@@ -12,8 +12,13 @@
             rgb(var(--accent)),
             rgb(var(--accent-dark)) 30%,
             white 60%);
-    --page-width: 1020px;
-    --content-width: 720px;
+    --page-width: 100%;
+    --content-width: 90%;
+
+    @media (min-width: 768px) {
+        --page-width: 1020px;
+        --content-width: 720px;
+    }
 }
 
 ::-moz-selection {
