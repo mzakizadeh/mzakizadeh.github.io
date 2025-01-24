@@ -6,6 +6,7 @@ import preact from "@astrojs/preact";
 import getReadingTime from 'reading-time';
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import partytown from '@astrojs/partytown';
 
 export function remarkModifiedTime() {
   return function (tree, file) {
@@ -28,7 +29,7 @@ export function remarkReadingTime() {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://mzakizadeh.me',
-  integrations: [preact(), mdx(), sitemap()],
+  integrations: [preact(), mdx(), sitemap(), partytown({ config: { forward: ["dataLayer.push"] } })],
   markdown: {
     remarkPlugins: [remarkModifiedTime, remarkReadingTime],
   },
