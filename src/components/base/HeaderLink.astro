@@ -20,6 +20,5 @@ const isActive = href === pathname || href === "/" + subpath?.[0];
 ---
 
 <a href={href} class:list={[className, { active: isActive }]} {...props}>
-    <slot />
+    <span class="arrow">&gt;&nbsp;</span><slot />
 </a>
-{!isLast && <span class={seperatorClassName}>/</span>}
