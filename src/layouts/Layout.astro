@@ -55,7 +55,9 @@ const { title, description } = Astro.props;
 <style is:global>
 	html {
 		font-family: system-ui, sans-serif;
-		background: var(--black);
+		background-color: var(--black);
+		background-image: linear-gradient(color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px), linear-gradient(to right, color-mix(in srgb, var(--accent) 8%, transparent) 1px, var(--black) 1px);
+		background-size: 20px 20px;
 	}
 	code {
 		font-family:
