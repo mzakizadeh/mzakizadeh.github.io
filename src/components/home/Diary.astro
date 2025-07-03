@@ -24,10 +24,17 @@ const renderedEntries = await Promise.all(
             renderedEntries.map((entry) => (
                 <li>
                     <span class="date">
-                        {new Intl.DateTimeFormat("en", {
-                            month: "short",
-                            year: "numeric",
-                        }).format(entry.data.date)}
+                        {(() => {
+                            const date = entry.data.date;
+                            const month = new Intl.DateTimeFormat("en", {
+                                month: "short",
+                            }).format(date);
+                            const year = date
+                                .getFullYear()
+                                .toString()
+                                .slice(-2);
+                            return `[${month} '${year}]`;
+                        })()}
                     </span>
                     <entry.renderedBody />
                 </li>
@@ -46,12 +53,12 @@ const renderedEntries = await Promise.all(
 <style>
     .diary {
         margin-bottom: 3rem;
+        position: relative;
     }
     .diary ul {
         width: 100%;
         margin: 0;
         padding-bottom: 0;
-        text-align: justify;
         list-style: none;
         padding: 0;
     }
@@ -59,20 +66,71 @@ const renderedEntries = await Promise.all(
         width: 100%;
         font-size: 1rem;
         display: flex;
-        flex-direction: rows;
-        align-items: center;
-        padding-bottom: 0.5rem;
-        margin-bottom: -1rem;
+        flex-direction: row;
+        align-items: flex-start;
+        padding-bottom: 1rem;
+        margin-bottom: 0;
+        position: relative;
+        padding-left: 2rem;
+    }
+    .diary ul li::before {
+        content: "";
+        position: absolute;
+        left: calc(2rem - 1rem - 3px);
+        top: 0.5rem;
+        width: 8px;
+        height: 8px;
+        background-color: var(--accent);
+        border-radius: 50%;
+        z-index: 2;
+    }
+    .diary ul li::after {
+        content: "";
+        position: absolute;
+        left: calc(2rem - 1rem);
+        top: 0.525rem;
+        width: 2px;
+        height: calc(100% + 0.5rem);
+        background-color: var(--accent);
+        z-index: 1;
+    }
+    .diary ul li:last-child::after {
+        display: block;
+        background: linear-gradient(
+            to bottom,
+            var(--accent) 0%,
+            var(--accent) 50%,
+            transparent 50%,
+            transparent 100%
+        );
+        background-size: 2px 8px;
+        height: 2rem;
+    }
+    .diary::after {
+        display: none;
     }
     .diary ul li :global(a) {
         text-decoration: none;
     }
     .diary ul li .date {
+        color: var(--accent);
         min-width: 7rem;
         font-size: 1rem;
+        flex-shrink: 0;
+        margin-top: 0;
+    }
+    .diary ul li :global(> *) {
+        margin-top: 0;
+        line-height: 1.5;
+    }
+    .diary ul li :global(p:first-child) {
+        margin-top: 0;
+    }
+    .diary ul li:last-child {
+        padding-bottom: 0;
     }
     .diary a {
-        padding-left: 7rem;
+        padding-left: 1.5rem;
         font-size: 1rem;
     }
 </style>
