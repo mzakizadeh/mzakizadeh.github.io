@@ -34,7 +34,10 @@ const sortedYears = Object.keys(postsByYear).sort(
                         <ul>
                             {postsByYear[year]
                                 .sort(
-                                    (a, b) =>
+                                    (
+                                        a: (typeof posts)[0],
+                                        b: (typeof posts)[0],
+                                    ) =>
                                         new Date(
                                             b.frontmatter.pubDate,
                                         ).getTime() -
@@ -42,12 +45,39 @@ const sortedYears = Object.keys(postsByYear).sort(
                                             a.frontmatter.pubDate,
                                         ).getTime(),
                                 )
-                                .map((post) => (
+                                .map((post: (typeof posts)[0]) => (
                                     <li>
                                         <a
                                             href={`/blog/${post.frontmatter.slug}/`}
                                         >
-                                            <span class="date">
+                                            <div class="mobile-meta">
+                                                <span class="date">
+                                                    {(() => {
+                                                        const date = new Date(
+                                                            post.frontmatter.pubDate,
+                                                        );
+                                                        const month =
+                                                            new Intl.DateTimeFormat(
+                                                                "en",
+                                                                {
+                                                                    month: "short",
+                                                                },
+                                                            ).format(date);
+                                                        const day = date
+                                                            .getDate()
+                                                            .toString()
+                                                            .padStart(2, "0");
+                                                        return `[${month} ${day}]`;
+                                                    })()}
+                                                </span>
+                                                <span class="read-time">
+                                                    {
+                                                        post.frontmatter
+                                                            .minutesRead
+                                                    }
+                                                </span>
+                                            </div>
+                                            <span class="date desktop-date">
                                                 {(() => {
                                                     const date = new Date(
                                                         post.frontmatter.pubDate,
@@ -69,7 +99,7 @@ const sortedYears = Object.keys(postsByYear).sort(
                                             <span class="title">
                                                 {post.frontmatter.title}
                                             </span>
-                                            <span class="read-time">
+                                            <span class="read-time desktop-read-time">
                                                 {post.frontmatter.minutesRead}
                                             </span>
                                         </a>
@@ -83,18 +113,6 @@ const sortedYears = Object.keys(postsByYear).sort(
     </main>
 </Layout>
 <style>
-    main {
-        width: 960px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .posts {
-        margin: 0 0 1rem;
-        width: 100%;
-        max-width: 800px;
-    }
     ul {
         list-style-type: none;
         margin: 0;
@@ -120,7 +138,7 @@ const sortedYears = Object.keys(postsByYear).sort(
     .date {
         color: var(--accent);
         min-width: 5rem;
-        margin-right: 0;
+        margin-right: 0.1rem;
         font-size: 0.9rem;
         flex-shrink: 0;
     }
@@ -136,7 +154,7 @@ const sortedYears = Object.keys(postsByYear).sort(
     .read-time {
         color: #ffffff;
         font-size: 0.9rem;
-        margin-left: 0.5rem;
+        margin-left: 0.6rem;
         flex-shrink: 0;
     }
     .year-section {
@@ -146,27 +164,62 @@ const sortedYears = Object.keys(postsByYear).sort(
         font-size: 1.2rem;
         font-weight: 600;
         color: #ffffff;
-        margin: 0 0 1rem 0;
+        margin: 0 0 0.5rem 0;
         text-transform: uppercase;
         letter-spacing: 1px;
     }
+
+    /* Desktop layout - hide mobile elements */
+    .mobile-meta {
+        display: none;
+    }
+
     @media (max-width: 720px) {
-        main {
-            width: 100%;
-            padding: 0 1rem;
-        }
         .posts {
             max-width: 100%;
+        }
+        .year-section {
+            margin-bottom: 2rem;
+        }
+        ul li {
+            margin-bottom: 0.75rem;
         }
         ul li a {
             flex-direction: column;
             align-items: flex-start;
             padding: 0.5rem 0;
         }
-        .date {
-            min-width: auto;
-            margin-right: 0;
+
+        /* Hide desktop elements on mobile */
+        .desktop-date,
+        .desktop-read-time {
+            display: none;
+        }
+
+        /* Show mobile elements */
+        .mobile-meta {
+            display: flex;
+            align-items: center;
             margin-bottom: 0.25rem;
+            width: 100%;
+        }
+        .mobile-meta .date {
+            margin-right: 1rem;
+            margin-bottom: 0;
+            font-size: 0.85rem;
+            min-width: auto;
+        }
+        .mobile-meta .read-time {
+            font-size: 0.85rem;
+            margin-left: 0;
+        }
+        .title {
+            width: 100%;
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 </style>

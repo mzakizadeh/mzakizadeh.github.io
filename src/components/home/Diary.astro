@@ -114,7 +114,7 @@ const renderedEntries = await Promise.all(
     }
     .diary ul li .date {
         color: var(--accent);
-        min-width: 7rem;
+        min-width: 6.2rem;
         font-size: 1rem;
         flex-shrink: 0;
         margin-top: 0;
@@ -132,5 +132,39 @@ const renderedEntries = await Promise.all(
     .diary a {
         padding-left: 1rem;
         font-size: 1rem;
+    }
+
+    @media (max-width: 720px) {
+        .diary {
+            margin-bottom: 2rem;
+        }
+        .diary ul li {
+            flex-direction: column;
+            align-items: flex-start;
+            padding-left: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+        .diary ul li::before {
+            left: calc(1.5rem - 1rem - 3px);
+        }
+        .diary ul li::after {
+            left: calc(1.5rem - 1rem);
+        }
+        .diary ul li .date {
+            min-width: auto;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .diary ul li :global(> *) {
+            margin: 0;
+            padding: 0;
+        }
+        .diary a {
+            padding-left: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .diary ul li:last-child {
+            padding-bottom: 2rem;
+        }
     }
 </style>
