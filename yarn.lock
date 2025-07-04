@@ -3171,6 +3171,11 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+pixelarticons@1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/pixelarticons/-/pixelarticons-1.8.0.tgz#f1931ee27090e1fa46bda77391c9fff43aef9187"
+  integrity sha512-BJ/F5JQROW3t2ktTeBvaGndKhlRCaMpDauT26AzHsY6HX1FOs09aY4LMUH7f61lSI+1+QfNf98IvC4aeiCYfvA==
+
 pkg-dir@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-4.2.0.tgz#f099133df7ede422e81d1d8448270eeb3e4261f3"

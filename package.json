@@ -19,6 +19,7 @@
     "@astrojs/upgrade": "^0.3.3",
     "astro": "^4.13.2",
     "mdast-util-to-string": "^4.0.0",
+    "pixelarticons": "1.8.0",
     "preact": "^10.23.1",
     "reading-time": "^1.5.0",
     "typescript": "^5.5.4"

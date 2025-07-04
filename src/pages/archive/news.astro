@@ -34,18 +34,25 @@ const renderedEntries = await Promise.all(
                             <li>
                                 <span class="date">
                                     {(() => {
-                                        const date = entry.data.date;
-                                        const month = new Intl.DateTimeFormat(
-                                            "en",
-                                            {
-                                                month: "short",
-                                            },
-                                        ).format(date);
-                                        const year = date
-                                            .getFullYear()
-                                            .toString()
-                                            .slice(-2);
-                                        return `[${month} '${year}]`;
+                                        try {
+                                            const date = new Date(entry.data.date);
+                                            if (isNaN(date.getTime())) {
+                                                return '[Invalid Date]';
+                                            }
+                                            const month = new Intl.DateTimeFormat(
+                                                "en",
+                                                {
+                                                    month: "short",
+                                                },
+                                            ).format(date);
+                                            const year = date
+                                                .getFullYear()
+                                                .toString()
+                                                .slice(-2);
+                                            return `[${month} '${year}]`;
+                                        } catch (error) {
+                                            return '[Date Error]';
+                                        }
                                     })()}
                                 </span>
                                 <entry.renderedBody />
