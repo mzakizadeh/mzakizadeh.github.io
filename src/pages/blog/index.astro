@@ -6,124 +6,167 @@ import { getCollection } from "astro:content";
 import { MY_NAME, SITE_DESCRIPTION } from "../../consts";
 
 const posts = await Astro.glob("../../content/blog/*.{md,mdx}");
+
+// Group posts by year
+const postsByYear = posts.reduce((acc, post) => {
+    const year = new Date(post.frontmatter.pubDate).getFullYear();
+    if (!acc[year]) {
+        acc[year] = [];
+    }
+    acc[year].push(post);
+    return acc;
+}, {});
+
+// Sort years in descending order
+const sortedYears = Object.keys(postsByYear).sort(
+    (a, b) => parseInt(b) - parseInt(a),
+);
 ---
 
 <Layout title={MY_NAME} description={SITE_DESCRIPTION}>
     <main>
         <Header />
         <section class="posts">
-            <ul>
-                {
-                    posts.map((post) => (
-                        <li>
-                            <a href={`/blog/${post.frontmatter.slug}/`}>
-                                <img
-                                    width={720}
-                                    height={360}
-                                    src={post.frontmatter.heroImage}
-                                    alt=""
-                                />
-                                <h4 class="title">{post.frontmatter.title}</h4>
-                                <p class="info">
-                                    <FormattedDate
-                                        date={
-                                            new Date(post.frontmatter.pubDate)
-                                        }
-                                    />
-                                    <span>•</span>
-                                    <span>{post.frontmatter.minutesRead}</span>
-                                </p>
-                            </a>
-                        </li>
-                    ))
-                }
-            </ul>
+            {
+                sortedYears.map((year) => (
+                    <div class="year-section">
+                        <h2 class="year-header">{year} ¬</h2>
+                        <ul>
+                            {postsByYear[year]
+                                .sort(
+                                    (a, b) =>
+                                        new Date(
+                                            b.frontmatter.pubDate,
+                                        ).getTime() -
+                                        new Date(
+                                            a.frontmatter.pubDate,
+                                        ).getTime(),
+                                )
+                                .map((post) => (
+                                    <li>
+                                        <a
+                                            href={`/blog/${post.frontmatter.slug}/`}
+                                        >
+                                            <span class="date">
+                                                {(() => {
+                                                    const date = new Date(
+                                                        post.frontmatter.pubDate,
+                                                    );
+                                                    const month =
+                                                        new Intl.DateTimeFormat(
+                                                            "en",
+                                                            {
+                                                                month: "short",
+                                                            },
+                                                        ).format(date);
+                                                    const day = date
+                                                        .getDate()
+                                                        .toString()
+                                                        .padStart(2, "0");
+                                                    return `[${month} ${day}]`;
+                                                })()}
+                                            </span>
+                                            <span class="title">
+                                                {post.frontmatter.title}
+                                            </span>
+                                            <span class="read-time">
+                                                {post.frontmatter.minutesRead}
+                                            </span>
+                                        </a>
+                                    </li>
+                                ))}
+                        </ul>
+                    </div>
+                ))
+            }
         </section>
     </main>
 </Layout>
 <style>
     main {
         width: 960px;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
     .posts {
         margin: 0 0 1rem;
-    }
-    ul,
-    p,
-    h4,
-    li {
-        margin: 0;
         width: 100%;
+        max-width: 800px;
     }
     ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
         list-style-type: none;
         margin: 0;
         padding: 0;
+        width: 100%;
     }
     ul li {
-        width: calc(50% - 1rem);
-    }
-    ul li * {
-        text-decoration: none;
-        transition: 0.2s ease;
-    }
-    ul li:first-child {
-        width: 100%;
-        margin-bottom: 1rem;
-        text-align: center;
-    }
-    ul li:first-child img {
-        width: 100%;
-    }
-    ul li:first-child .title {
-        font-size: 2.369rem;
-    }
-    ul li img {
         margin-bottom: 0.5rem;
-        border-radius: 12px;
+        width: 100%;
     }
     ul li a {
-        display: block;
-        color: white;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 1rem;
+        padding: 0.25rem 0;
+        transition: color 0.2s ease;
+    }
+    ul li a:hover {
+        color: var(--accent);
+    }
+    .date {
+        color: var(--accent);
+        min-width: 5rem;
+        margin-right: 0;
+        font-size: 0.9rem;
+        flex-shrink: 0;
     }
     .title {
-        margin: 0;
-        color: rgb(var(--black));
-        line-height: 1;
-    }
-    .info {
+        flex: 1;
         font-size: 1rem;
-        margin: 0;
-        margin-top: 10px;
-        color: rgb(var(--gray));
-        /* display: flex; */
+        font-weight: normal;
+        line-height: 1.4;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
-    ul li a:hover h4,
-    ul li a:hover .info {
-        color: rgb(var(--accent));
+    .read-time {
+        color: #ffffff;
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
+        flex-shrink: 0;
     }
-    ul a:hover img {
-        box-shadow: var(--box-shadow);
+    .year-section {
+        margin-bottom: 3rem;
+    }
+    .year-header {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 0 0 1rem 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
     @media (max-width: 720px) {
-        ul {
-            gap: 0.5em;
-        }
-        ul li {
+        main {
             width: 100%;
-            text-align: center;
+            padding: 0 1rem;
         }
-        ul li:first-child {
-            margin-bottom: 0;
+        .posts {
+            max-width: 100%;
         }
-        ul li:first-child .title {
-            font-size: 1.563em;
+        ul li a {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0.5rem 0;
+        }
+        .date {
+            min-width: auto;
+            margin-right: 0;
+            margin-bottom: 0.25rem;
         }
     }
 </style>
