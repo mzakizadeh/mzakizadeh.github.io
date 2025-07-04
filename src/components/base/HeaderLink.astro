@@ -17,8 +17,19 @@ const {
 const { pathname } = Astro.url;
 const subpath = pathname.match(/[^\/]+/g);
 const isActive = href === pathname || href === "/" + subpath?.[0];
+
+// Check if the link is external
+const hrefString = href?.toString() || "";
+const isExternal =
+    hrefString.startsWith("http://") || hrefString.startsWith("https://");
 ---
 
-<a href={href} class:list={[className, { active: isActive }]} {...props}>
+<a
+    href={href}
+    class:list={[className, { active: isActive }]}
+    target={isExternal ? "_blank" : undefined}
+    rel={isExternal ? "noopener noreferrer" : undefined}
+    {...props}
+>
     <span class="arrow">&gt;&nbsp;</span><slot />
 </a>
