@@ -13,7 +13,7 @@
             rgb(var(--accent-dark)) 30%,
             white 60%);
     --page-width: 100%;
-    --content-width: 90%;
+    --content-width: 95%;
 
     @media (min-width: 768px) {
         --page-width: 1020px;
