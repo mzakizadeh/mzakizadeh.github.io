@@ -79,7 +79,6 @@ ol,
 li {
     margin-left: auto;
     margin-right: auto;
-    width: var(--content-width);
 }
 
 p:has(img) {

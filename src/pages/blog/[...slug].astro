@@ -58,6 +58,20 @@ const { title, description, pubDate, updatedDate, heroImage } = post.data;
 		max-width: 100%;
 		margin: 0;
 	}
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p:not(:has(img)),
+	blockquote,
+	pre,
+	ul,
+	ol,
+	li {
+		width: var(--content-width);
+	}
 	.title h1 {
 		width: 100%;
 	}
