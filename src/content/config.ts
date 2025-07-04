@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 
-const diaryCollection = defineCollection({
+const newsCollection = defineCollection({
     type: 'content',
     schema: z.object({
         date: z.coerce.date(),
@@ -31,7 +31,7 @@ const featuredCollection = defineCollection({
 });
 
 export const collections = {
-    'diary': diaryCollection,
+    'news': newsCollection,
     'blog': blogCollection,
     'featured': featuredCollection,
 };

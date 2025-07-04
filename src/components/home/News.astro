@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 
-const entries = (await getCollection("diary")).sort(
+const entries = (await getCollection("news")).sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
@@ -18,7 +18,7 @@ const renderedEntries = await Promise.all(
 );
 ---
 
-<div class="diary">
+<div class="news">
     <ul>
         {
             renderedEntries.map((entry) => (
@@ -51,18 +51,18 @@ const renderedEntries = await Promise.all(
     }
 </div>
 <style>
-    .diary {
+    .news {
         margin-bottom: 3rem;
         position: relative;
     }
-    .diary ul {
+    .news ul {
         width: 100%;
         margin: 0;
         padding-bottom: 0;
         list-style: none;
         padding: 0;
     }
-    .diary ul li {
+    .news ul li {
         width: 100%;
         font-size: 1rem;
         display: flex;
@@ -73,7 +73,7 @@ const renderedEntries = await Promise.all(
         position: relative;
         padding-left: 2rem;
     }
-    .diary ul li::before {
+    .news ul li::before {
         content: "";
         position: absolute;
         left: calc(2rem - 1rem - 3px);
@@ -84,7 +84,7 @@ const renderedEntries = await Promise.all(
         border-radius: 50%;
         z-index: 2;
     }
-    .diary ul li::after {
+    .news ul li::after {
         content: "";
         position: absolute;
         left: calc(2rem - 1rem);
@@ -94,7 +94,7 @@ const renderedEntries = await Promise.all(
         background-color: var(--accent);
         z-index: 1;
     }
-    .diary ul li:last-child::after {
+    .news ul li:last-child::after {
         display: block;
         background: linear-gradient(
             to bottom,
@@ -106,64 +106,64 @@ const renderedEntries = await Promise.all(
         background-size: 2px 8px;
         height: 2rem;
     }
-    .diary::after {
+    .news::after {
         display: none;
     }
-    .diary ul li :global(a) {
+    .news ul li :global(a) {
         text-decoration: none;
     }
-    .diary ul li .date {
+    .news ul li .date {
         color: var(--accent);
         min-width: 6.2rem;
         font-size: 1rem;
         flex-shrink: 0;
         margin-top: 0;
     }
-    .diary ul li :global(> *) {
+    .news ul li :global(> *) {
         margin-top: 0;
         line-height: 1.5;
     }
-    .diary ul li :global(p:first-child) {
+    .news ul li :global(p:first-child) {
         margin-top: 0;
     }
-    .diary ul li:last-child {
+    .news ul li:last-child {
         padding-bottom: 0.3rem;
     }
-    .diary a {
+    .news a {
         padding-left: 1rem;
         font-size: 1rem;
     }
 
     @media (max-width: 720px) {
-        .diary {
+        .news {
             margin-bottom: 2rem;
         }
-        .diary ul li {
+        .news ul li {
             flex-direction: column;
             align-items: flex-start;
             padding-left: 1.5rem;
             padding-bottom: 1.5rem;
         }
-        .diary ul li::before {
+        .news ul li::before {
             left: calc(1.5rem - 1rem - 3px);
         }
-        .diary ul li::after {
+        .news ul li::after {
             left: calc(1.5rem - 1rem);
         }
-        .diary ul li .date {
+        .news ul li .date {
             min-width: auto;
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
         }
-        .diary ul li :global(> *) {
+        .news ul li :global(> *) {
             margin: 0;
             padding: 0;
         }
-        .diary a {
+        .news a {
             padding-left: 0.5rem;
             font-size: 0.95rem;
         }
-        .diary ul li:last-child {
+        .news ul li:last-child {
             padding-bottom: 2rem;
         }
     }
