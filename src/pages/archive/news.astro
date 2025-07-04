@@ -1,14 +1,15 @@
 ---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/base/Header.astro";
 import { getCollection } from "astro:content";
+import { MY_NAME, SITE_DESCRIPTION } from "../../consts";
 
 const entries = (await getCollection("diary")).sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
-const N = 5;
-
 const renderedEntries = await Promise.all(
-    entries.slice(0, N).map(async (entry) => {
+    entries.map(async (entry) => {
         const { Content } = await entry.render();
         return {
             ...entry,
@@ -18,39 +19,63 @@ const renderedEntries = await Promise.all(
 );
 ---
 
-<div class="diary">
-    <ul>
-        {
-            renderedEntries.map((entry) => (
-                <li>
-                    <span class="date">
-                        {(() => {
-                            const date = entry.data.date;
-                            const month = new Intl.DateTimeFormat("en", {
-                                month: "short",
-                            }).format(date);
-                            const year = date
-                                .getFullYear()
-                                .toString()
-                                .slice(-2);
-                            return `[${month} '${year}]`;
-                        })()}
-                    </span>
-                    <entry.renderedBody />
-                </li>
-            ))
-        }
-    </ul>
-    {
-        entries.length > N && (
-            <a href="/archive/news">
-                <span class="arrow">&gt;</span>
-                News Archive
-            </a>
-        )
-    }
-</div>
+<Layout
+    title={`News Archive - ${MY_NAME}`}
+    description={`All news entries from ${MY_NAME}`}
+>
+    <main>
+        <Header />
+        <section class="archive">
+            <h1 class="archive-title">archive/news ¬</h1>
+            <div class="diary">
+                <ul>
+                    {
+                        renderedEntries.map((entry) => (
+                            <li>
+                                <span class="date">
+                                    {(() => {
+                                        const date = entry.data.date;
+                                        const month = new Intl.DateTimeFormat(
+                                            "en",
+                                            {
+                                                month: "short",
+                                            },
+                                        ).format(date);
+                                        const year = date
+                                            .getFullYear()
+                                            .toString()
+                                            .slice(-2);
+                                        return `[${month} '${year}]`;
+                                    })()}
+                                </span>
+                                <entry.renderedBody />
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </section>
+    </main>
+</Layout>
+
 <style>
+    .archive {
+        margin: 0 0 3rem;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .archive-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 0 0 2rem 0;
+        text-align: left;
+        text-transform: lowercase;
+        letter-spacing: 1px;
+        font-family: "Courier New", monospace;
+    }
+
     .diary {
         margin-bottom: 3rem;
         position: relative;
@@ -95,16 +120,7 @@ const renderedEntries = await Promise.all(
         z-index: 1;
     }
     .diary ul li:last-child::after {
-        display: block;
-        background: linear-gradient(
-            to bottom,
-            var(--accent) 0%,
-            var(--accent) 50%,
-            transparent 50%,
-            transparent 100%
-        );
-        background-size: 2px 8px;
-        height: 2rem;
+        display: none;
     }
     .diary::after {
         display: none;
@@ -114,7 +130,7 @@ const renderedEntries = await Promise.all(
     }
     .diary ul li .date {
         color: var(--accent);
-        min-width: 6.2rem;
+        min-width: 7rem;
         font-size: 1rem;
         flex-shrink: 0;
         margin-top: 0;
@@ -129,12 +145,19 @@ const renderedEntries = await Promise.all(
     .diary ul li:last-child {
         padding-bottom: 0.3rem;
     }
-    .diary a {
-        padding-left: 1rem;
-        font-size: 1rem;
-    }
 
     @media (max-width: 720px) {
+        main {
+            width: 100%;
+            padding: 0 1rem;
+        }
+        .archive {
+            max-width: 100%;
+        }
+        .archive-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
         .diary {
             margin-bottom: 2rem;
         }
@@ -156,15 +179,8 @@ const renderedEntries = await Promise.all(
             margin-bottom: 0.5rem;
         }
         .diary ul li :global(> *) {
-            margin: 0;
-            padding: 0;
-        }
-        .diary a {
-            padding-left: 0.5rem;
-            font-size: 0.95rem;
-        }
-        .diary ul li:last-child {
-            padding-bottom: 2rem;
+            width: 100%;
+            margin-top: 0;
         }
     }
 </style>
