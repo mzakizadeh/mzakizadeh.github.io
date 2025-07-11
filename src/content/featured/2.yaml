@@ -1,0 +1,5 @@
+title: "KARA Toolkit: Optimized RAG Chunking"
+body: "KARA is a toolkit for efficient Retrieval-Augmented Generation (RAG) chunking. It models chunking as a DAG and uses Dijkstra's algorithm to find optimal splits, boosting retrieval and generation."
+href: "https://github.com/mzakizadeh/kara"
+type: "github"
+tags: ["Generation", "Retrieval", "Langchain"]
