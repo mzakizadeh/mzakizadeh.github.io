@@ -21,8 +21,14 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 				<a href="mailto:mzakizadeh@proton.me"> mzakizadeh@proton.me</a>.
 			</p>
 		</div>
-		<Featured />
-		<News />
+		<section class="featured-section">
+			<!-- <h2 class="section-header">Featured</h2> -->
+			<Featured />
+		</section>
+		<section class="news-section">
+			<h2 class="section-header">Updates</h2>
+			<News />
+		</section>
 	</main>
 </Layout>
 
@@ -62,13 +68,6 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 		height: auto;
 		z-index: -1;
 	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
 	.introduction {
 		display: flex;
 		flex-direction: column;
@@ -79,10 +78,10 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 		display: block;
 		text-align: center;
 		margin-bottom: 2rem;
-		border: 1px solid rgba(var(--accent-light), 25%);
+		border: 1px solid rgba(var(--primary-light), 25%);
 		background: linear-gradient(
-			rgba(var(--accent-dark), 66%),
-			rgba(var(--accent-dark), 33%)
+			rgba(var(--primary-dark), 66%),
+			rgba(var(--primary-dark), 33%)
 		);
 		padding: 1.5rem 0;
 		border-radius: 8px;
@@ -90,15 +89,31 @@ import { MY_NAME, SITE_DESCRIPTION } from "../consts";
 	.introduction code {
 		font-size: 0.8em;
 		font-weight: bold;
-		background: rgba(var(--accent-light), 12%);
-		color: rgb(var(--accent-light));
+		background: rgba(var(--primary-light), 12%);
+		color: rgb(var(--primary-light));
 		border-radius: 4px;
 		padding: 0.3em 0.4em;
 	}
 	.introduction strong {
-		color: rgb(var(--accent-light));
+		color: rgb(var(--primary-light));
 	}
-	.news {
+	.section-header {
+		font-size: 1.2rem;
+		font-weight: 600;
+		color: #ffffff;
+		margin: 0 0 1.5rem 0;
+		letter-spacing: 1px;
+		/* text-transform: capitalize; */
+		/* text-align: center; */
+	}
+	.section-header::after {
+		content: "¬";
+		padding-left: 0.5rem;
+	}
+	.featured-section {
+		margin-bottom: 4rem;
+	}
+	.news-section {
 		margin-bottom: 3rem;
 	}
 	.news ul {
