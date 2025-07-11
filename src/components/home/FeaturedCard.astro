@@ -89,9 +89,9 @@ const isExternal =
 		padding: 1.5rem;
 		background: linear-gradient(
 			135deg,
-			#0f1419 0%,
-			#111922 50%,
-			#0f1419 100%
+			rgb(15, 19, 26) 10%,
+			rgb(15, 26, 34) 50%,
+			rgb(15, 19, 26) 90%
 		);
 		border: 2px solid #1a1a1a;
 		border-radius: 0;
@@ -100,6 +100,26 @@ const isExternal =
 		transition: all 0.3s ease;
 		position: relative;
 		box-shadow: 0 1px 3px rgba(67, 232, 227, 0.1);
+	}
+	.featured-card a::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: linear-gradient(
+			45deg,
+			transparent 20%,
+			rgba(255, 255, 255, 0.05) 50%,
+			transparent 80%
+		);
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.featured-card a:hover::before {
+		opacity: 1;
 	}
 
 	.featured-card a:hover {
