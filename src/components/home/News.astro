@@ -86,7 +86,7 @@ const renderedEntries = await Promise.all(
         top: 0.5rem;
         width: 8px;
         height: 8px;
-        background-color: var(--accent);
+        background-color: var(--primary);
         border-radius: 50%;
         z-index: 2;
     }
@@ -97,15 +97,15 @@ const renderedEntries = await Promise.all(
         top: 0.525rem;
         width: 2px;
         height: calc(100% + 0.5rem);
-        background-color: var(--accent);
+        background-color: var(--primary);
         z-index: 1;
     }
     .news ul li:last-child::after {
         display: block;
         background: linear-gradient(
             to bottom,
-            var(--accent) 0%,
-            var(--accent) 50%,
+            var(--primary) 0%,
+            var(--primary) 50%,
             transparent 50%,
             transparent 100%
         );
@@ -119,7 +119,7 @@ const renderedEntries = await Promise.all(
         text-decoration: none;
     }
     .news ul li .date {
-        color: var(--accent);
+        color: var(--primary);
         min-width: 6.2rem;
         font-size: 1rem;
         flex-shrink: 0;
