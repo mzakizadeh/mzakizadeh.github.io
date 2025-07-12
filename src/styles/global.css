@@ -117,6 +117,10 @@ a:hover {
     color: var(--primary);
 }
 
+a:active {
+    color: var(--secondary);
+}
+
 p {
     margin-bottom: 1em;
 }
