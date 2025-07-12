@@ -10,5 +10,5 @@ export const NAV_LINKS = [
     // { 'name': 'CV', 'to': '/files/zakizadeh.pdf' },
     { 'name': 'Scholar', 'to': 'https://scholar.google.com/citations?hl=en&user=UEv0uSsAAAAJ' },
     { 'name': 'Github', 'to': 'https://github.com/mzakizadeh' },
-    { 'name': 'Linkedin', 'to': 'https://linkedin.com/mahdizakizadeh' },
+    { 'name': 'Linkedin', 'to': 'https://linkedin.com/in/mahdizakizadeh' },
 ]
