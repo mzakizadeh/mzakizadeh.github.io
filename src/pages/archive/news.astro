@@ -5,188 +5,182 @@ import { getCollection } from "astro:content";
 import { MY_NAME, SITE_DESCRIPTION } from "../../consts";
 
 const entries = (await getCollection("news")).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
 const renderedEntries = await Promise.all(
-    entries.map(async (entry) => {
-        const { Content } = await entry.render();
-        return {
-            ...entry,
-            renderedBody: Content,
-        };
-    }),
+  entries.map(async (entry) => {
+    const { Content } = await entry.render();
+    return {
+      ...entry,
+      renderedBody: Content,
+    };
+  }),
 );
 ---
 
 <Layout
-    title={`News Archive - ${MY_NAME}`}
-    description={`All news entries from ${MY_NAME}`}
+  title={`News Archive - ${MY_NAME}`}
+  description={`All news entries from ${MY_NAME}`}
 >
-    <main>
-        <Header />
-        <section class="archive">
-            <h1 class="archive-title">Updates ¬</h1>
-            <div class="news">
-                <ul>
-                    {
-                        renderedEntries.map((entry) => (
-                            <li>
-                                <span class="date">
-                                    {(() => {
-                                        try {
-                                            const date = new Date(entry.data.date);
-                                            if (isNaN(date.getTime())) {
-                                                return '[Invalid Date]';
-                                            }
-                                            const month = new Intl.DateTimeFormat(
-                                                "en",
-                                                {
-                                                    month: "short",
-                                                },
-                                            ).format(date);
-                                            const year = date
-                                                .getFullYear()
-                                                .toString()
-                                                .slice(-2);
-                                            return `[${month} '${year}]`;
-                                        } catch (error) {
-                                            return '[Date Error]';
-                                        }
-                                    })()}
-                                </span>
-                                <entry.renderedBody />
-                            </li>
-                        ))
+  <main>
+    <Header />
+    <section class="archive">
+      <h1 class="archive-title">Updates ¬</h1>
+      <div class="news">
+        <ul>
+          {
+            renderedEntries.map((entry) => (
+              <li>
+                <span class="date">
+                  {(() => {
+                    try {
+                      const date = new Date(entry.data.date);
+                      if (isNaN(date.getTime())) {
+                        return "[Invalid Date]";
+                      }
+                      const month = new Intl.DateTimeFormat("en", {
+                        month: "short",
+                      }).format(date);
+                      const year = date.getFullYear().toString().slice(-2);
+                      return `[${month} '${year}]`;
+                    } catch (error) {
+                      return "[Date Error]";
                     }
-                </ul>
-            </div>
-        </section>
-    </main>
+                  })()}
+                </span>
+                <entry.renderedBody />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+  </main>
 </Layout>
 
 <style>
+  .archive {
+    margin: 0 0 3rem;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .archive-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 2rem 0;
+    text-align: left;
+    letter-spacing: 1px;
+    /* text-transform: lowercase; */
+  }
+
+  .news {
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  .news ul {
+    width: 100%;
+    margin: 0;
+    padding-bottom: 0;
+    list-style: none;
+    padding: 0;
+  }
+  .news ul li {
+    width: 100%;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-bottom: 1rem;
+    margin-bottom: 0;
+    position: relative;
+    padding-left: 2rem;
+  }
+  .news ul li::before {
+    content: "";
+    position: absolute;
+    left: calc(2rem - 1rem - 3px);
+    top: 0.5rem;
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    z-index: 2;
+  }
+  .news ul li::after {
+    content: "";
+    position: absolute;
+    left: calc(2rem - 1rem);
+    top: 0.525rem;
+    width: 2px;
+    height: calc(100% + 0.5rem);
+    background-color: var(--primary);
+    z-index: 1;
+  }
+  .news ul li:last-child::after {
+    display: none;
+  }
+  .news::after {
+    display: none;
+  }
+  .news ul li :global(a) {
+    text-decoration: none;
+  }
+  .news ul li .date {
+    color: var(--primary);
+    min-width: 7rem;
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 0;
+  }
+  .news ul li :global(> *) {
+    margin-top: 0;
+    line-height: 1.5;
+  }
+  .news ul li :global(p:first-child) {
+    margin-top: 0;
+  }
+  .news ul li:last-child {
+    padding-bottom: 0.3rem;
+  }
+
+  @media (max-width: 720px) {
+    main {
+      width: 100%;
+      padding: 0 1rem;
+    }
     .archive {
-        margin: 0 0 3rem;
-        width: 100%;
-        max-width: 800px;
+      max-width: 100%;
     }
-
     .archive-title {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #ffffff;
-        margin: 0 0 2rem 0;
-        text-align: left;
-        letter-spacing: 1px;
-        /* text-transform: lowercase; */
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
     }
-
     .news {
-        margin-bottom: 3rem;
-        position: relative;
-    }
-    .news ul {
-        width: 100%;
-        margin: 0;
-        padding-bottom: 0;
-        list-style: none;
-        padding: 0;
+      margin-bottom: 2rem;
     }
     .news ul li {
-        width: 100%;
-        font-size: 1rem;
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        padding-bottom: 1rem;
-        margin-bottom: 0;
-        position: relative;
-        padding-left: 2rem;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 1.5rem;
+      padding-bottom: 1.5rem;
     }
     .news ul li::before {
-        content: "";
-        position: absolute;
-        left: calc(2rem - 1rem - 3px);
-        top: 0.5rem;
-        width: 8px;
-        height: 8px;
-        background-color: var(--primary);
-        border-radius: 50%;
-        z-index: 2;
+      left: calc(1.5rem - 1rem - 3px);
     }
     .news ul li::after {
-        content: "";
-        position: absolute;
-        left: calc(2rem - 1rem);
-        top: 0.525rem;
-        width: 2px;
-        height: calc(100% + 0.5rem);
-        background-color: var(--primary);
-        z-index: 1;
-    }
-    .news ul li:last-child::after {
-        display: none;
-    }
-    .news::after {
-        display: none;
-    }
-    .news ul li :global(a) {
-        text-decoration: none;
+      left: calc(1.5rem - 1rem);
     }
     .news ul li .date {
-        color: var(--primary);
-        min-width: 7rem;
-        font-size: 1rem;
-        flex-shrink: 0;
-        margin-top: 0;
+      min-width: auto;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
     }
     .news ul li :global(> *) {
-        margin-top: 0;
-        line-height: 1.5;
+      width: 100%;
+      margin-top: 0;
     }
-    .news ul li :global(p:first-child) {
-        margin-top: 0;
-    }
-    .news ul li:last-child {
-        padding-bottom: 0.3rem;
-    }
-
-    @media (max-width: 720px) {
-        main {
-            width: 100%;
-            padding: 0 1rem;
-        }
-        .archive {
-            max-width: 100%;
-        }
-        .archive-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .news {
-            margin-bottom: 2rem;
-        }
-        .news ul li {
-            flex-direction: column;
-            align-items: flex-start;
-            padding-left: 1.5rem;
-            padding-bottom: 1.5rem;
-        }
-        .news ul li::before {
-            left: calc(1.5rem - 1rem - 3px);
-        }
-        .news ul li::after {
-            left: calc(1.5rem - 1rem);
-        }
-        .news ul li .date {
-            min-width: auto;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-        .news ul li :global(> *) {
-            width: 100%;
-            margin-top: 0;
-        }
-    }
+  }
 </style>

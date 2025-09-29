@@ -2,16 +2,16 @@
 import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"a"> & {
-    isLast?: boolean;
-    seperatorClassName?: string;
+  isLast?: boolean;
+  seperatorClassName?: string;
 };
 
 const {
-    href,
-    isLast,
-    seperatorClassName,
-    class: className,
-    ...props
+  href,
+  isLast,
+  seperatorClassName,
+  class: className,
+  ...props
 } = Astro.props;
 
 const { pathname } = Astro.url;
@@ -21,15 +21,15 @@ const isActive = href === pathname || href === "/" + subpath?.[0];
 // Check if the link is external
 const hrefString = href?.toString() || "";
 const isExternal =
-    hrefString.startsWith("http://") || hrefString.startsWith("https://");
+  hrefString.startsWith("http://") || hrefString.startsWith("https://");
 ---
 
 <a
-    href={href}
-    class:list={[className, { active: isActive }]}
-    target={isExternal ? "_blank" : undefined}
-    rel={isExternal ? "noopener noreferrer" : undefined}
-    {...props}
+  href={href}
+  class:list={[className, { active: isActive }]}
+  target={isExternal ? "_blank" : undefined}
+  rel={isExternal ? "noopener noreferrer" : undefined}
+  {...props}
 >
-    <span class="arrow">&gt;&nbsp;</span><slot />
+  <span class="arrow">&gt;&nbsp;</span><slot />
 </a>

@@ -6,82 +6,82 @@ const { pathname } = Astro.url;
 ---
 
 <header>
-    <nav>
-        {
-            NAV_LINKS.map((link, i) => (
-                <HeaderLink href={link.to} isLast={i + 1 == NAV_LINKS.length}>
-                    {link.name}
-                </HeaderLink>
-            ))
-        }
-    </nav>
+  <nav>
+    {
+      NAV_LINKS.map((link, i) => (
+        <HeaderLink href={link.to} isLast={i + 1 == NAV_LINKS.length}>
+          {link.name}
+        </HeaderLink>
+      ))
+    }
+  </nav>
 </header>
 
 <style>
+  header {
+    margin: 1rem 0 4rem;
+    padding: 0 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  header a {
+    letter-spacing: 1px;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  nav a {
+    padding: 0 1.1rem;
+    font-size: 1rem;
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    text-transform: uppercase;
+    transition: transform 0.2s ease;
+    transform: translateY(0);
+  }
+  nav a:hover {
+    color: var(--primary);
+  }
+  nav a.active {
+    color: var(--primary);
+    transform: translateY(-5px);
+  }
+  nav .arrow {
+    font-size: 0.9rem;
+  }
+  .social-links,
+  .social-links a {
+    display: flex;
+  }
+  @media (max-width: 720px) {
     header {
-        margin: 1rem 0 4rem;
-        padding: 0 1em;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    header a {
-        letter-spacing: 1px;
+      margin: 0.5rem 0 2rem;
+      padding: 0 0.5rem;
     }
     nav {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
+      gap: 0.25rem;
     }
     nav a {
-        padding: 0 1.1rem;
-        font-size: 1rem;
-        display: inline-block;
-        text-decoration: none;
-        color: #ffffff;
-        text-transform: uppercase;
-        transition: transform 0.2s ease;
-        transform: translateY(0);
-    }
-    nav a:hover {
-        color: var(--primary);
-    }
-    nav a.active {
-        color: var(--primary);
-        transform: translateY(-5px);
+      padding: 0 0.6rem;
+      font-size: 0.9rem;
     }
     nav .arrow {
-        font-size: 0.9rem;
+      font-size: 0.8rem;
     }
-    .social-links,
-    .social-links a {
-        display: flex;
+    .social-links {
+      display: none;
     }
-    @media (max-width: 720px) {
-        header {
-            margin: 0.5rem 0 2rem;
-            padding: 0 0.5rem;
-        }
-        nav {
-            gap: 0.25rem;
-        }
-        nav a {
-            padding: 0 0.6rem;
-            font-size: 0.9rem;
-        }
-        nav .arrow {
-            font-size: 0.8rem;
-        }
-        .social-links {
-            display: none;
-        }
+  }
+  @media (max-width: 480px) {
+    nav a {
+      padding: 0 0.7rem;
+      font-size: 0.75rem;
     }
-    @media (max-width: 480px) {
-        nav a {
-            padding: 0 0.7rem;
-            font-size: 0.75rem;
-        }
-    }
+  }
 </style>

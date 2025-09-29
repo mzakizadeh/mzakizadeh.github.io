@@ -1,0 +1,5 @@
+{
+  "editor.tabSize": 2, // Sets the number of spaces per tab
+  "editor.insertSpaces": true, // Ensures spaces are used instead of tabs
+  "editor.detectIndentation": false // Disables automatic indentation detection per file
+}

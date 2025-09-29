@@ -1,217 +1,217 @@
 ---
 interface Props {
-	title: string;
-	body: string;
-	href: string;
-	type: "research" | "github" | "blog" | "project" | "publication";
-	tags?: string[];
+  title: string;
+  body: string;
+  href: string;
+  type: "research" | "github" | "blog" | "project" | "publication";
+  tags?: string[];
 }
 
 const { href, title, body, type, tags } = Astro.props;
 
 // Icon mapping - using pixelarticons from unpkg
 const iconMapping = {
-	research: "article",
-	publication: "article",
-	github: "github",
-	project: "code",
-	blog: "lightbulb-on",
-	default: "link",
+  research: "article",
+  publication: "article",
+  github: "github",
+  project: "code",
+  blog: "lightbulb-on",
+  default: "link",
 };
 
 const getIconName = (type: string) => {
-	return iconMapping[type as keyof typeof iconMapping] || iconMapping.default;
+  return iconMapping[type as keyof typeof iconMapping] || iconMapping.default;
 };
 
 const getTypeLabel = (type: string) => {
-	switch (type) {
-		case "research":
-			return "Latest Research";
-		case "publication":
-			return "Publication";
-		case "github":
-		case "project":
-			return "GitHub Project";
-		case "blog":
-			return "Blog Post";
-		default:
-			return "Featured";
-	}
+  switch (type) {
+    case "research":
+      return "Latest Research";
+    case "publication":
+      return "Publication";
+    case "github":
+    case "project":
+      return "GitHub Project";
+    case "blog":
+      return "Blog Post";
+    default:
+      return "Featured";
+  }
 };
 
 // Check if the link is external
 const hrefString = href?.toString() || "";
 const isExternal =
-	hrefString.startsWith("http://") || hrefString.startsWith("https://");
+  hrefString.startsWith("http://") || hrefString.startsWith("https://");
 ---
 
 <li class="featured-card">
-	<a
-		href={href}
-		target={isExternal ? "_blank" : undefined}
-		rel={isExternal ? "noopener noreferrer" : undefined}
-	>
-		<div class="card-header">
-			<img
-				class="icon"
-				width="20"
-				height="20"
-				src={`https://unpkg.com/pixelarticons@1.8.0/svg/${getIconName(type)}.svg`}
-				alt={`${type} icon`}
-			/>
-			<span class="type-label">{getTypeLabel(type)}</span>
-		</div>
-		<h3 class="card-title">{title}</h3>
-		<p class="card-body">{body}</p>
-		{
-			tags && tags.length > 0 && (
-				<div class="card-tags">
-					{tags.map((tag) => (
-						<span class="tag">#{tag}</span>
-					))}
-				</div>
-			)
-		}
-	</a>
+  <a
+    href={href}
+    target={isExternal ? "_blank" : undefined}
+    rel={isExternal ? "noopener noreferrer" : undefined}
+  >
+    <div class="card-header">
+      <img
+        class="icon"
+        width="20"
+        height="20"
+        src={`https://unpkg.com/pixelarticons@1.8.0/svg/${getIconName(type)}.svg`}
+        alt={`${type} icon`}
+      />
+      <span class="type-label">{getTypeLabel(type)}</span>
+    </div>
+    <h3 class="card-title">{title}</h3>
+    <p class="card-body">{body}</p>
+    {
+      tags && tags.length > 0 && (
+        <div class="card-tags">
+          {tags.map((tag) => (
+            <span class="tag">#{tag}</span>
+          ))}
+        </div>
+      )
+    }
+  </a>
 </li>
 <style>
-	.featured-card {
-		list-style: none;
-		display: flex;
-		flex: 1;
-		margin-bottom: 1rem;
-		min-width: 0;
-	}
+  .featured-card {
+    list-style: none;
+    display: flex;
+    flex: 1;
+    margin-bottom: 1rem;
+    min-width: 0;
+  }
 
-	.featured-card a {
-		display: block;
-		width: 100%;
-		padding: 1.5rem;
-		background: linear-gradient(
-			135deg,
-			rgb(15, 19, 26) 10%,
-			rgb(15, 26, 34) 50%,
-			rgb(15, 19, 26) 90%
-		);
-		border: 2px solid #1a1a1a;
-		border-radius: 0;
-		text-decoration: none;
-		color: #ffffff;
-		transition: all 0.3s ease;
-		position: relative;
-		box-shadow: 0 1px 3px rgba(67, 232, 227, 0.1);
-	}
-	.featured-card a::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: linear-gradient(
-			45deg,
-			transparent 20%,
-			rgba(255, 255, 255, 0.05) 50%,
-			transparent 80%
-		);
-		opacity: 0;
-		transition: opacity 0.3s ease;
-	}
+  .featured-card a {
+    display: block;
+    width: 100%;
+    padding: 1.5rem;
+    background: linear-gradient(
+      135deg,
+      rgb(15, 19, 26) 10%,
+      rgb(15, 26, 34) 50%,
+      rgb(15, 19, 26) 90%
+    );
+    border: 2px solid #1a1a1a;
+    border-radius: 0;
+    text-decoration: none;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(67, 232, 227, 0.1);
+  }
+  .featured-card a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      45deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.05) 50%,
+      transparent 80%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 
-	.featured-card a:hover::before {
-		opacity: 1;
-	}
+  .featured-card a:hover::before {
+    opacity: 1;
+  }
 
-	.featured-card a:hover {
-		border-color: var(--secondary);
-		box-shadow: 0 4px 16px color-mix(in srgb, var(--secondary), transparent 80%);
-		transform: translateY(-2px);
-	}
+  .featured-card a:hover {
+    border-color: var(--secondary);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--secondary), transparent 80%);
+    transform: translateY(-2px);
+  }
 
-	.card-header {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		margin-bottom: 1rem;
-	}
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
 
-	.icon {
-		flex-shrink: 0;
-		filter: brightness(0) invert(1);
-		transform: translateY(-1px);
-	}
+  .icon {
+    flex-shrink: 0;
+    filter: brightness(0) invert(1);
+    transform: translateY(-1px);
+  }
 
-	.type-label {
-		font-size: 0.85rem;
-		color: var(--primary);
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.8px;
-		opacity: 0.9;
-	}
+  .type-label {
+    font-size: 0.85rem;
+    color: var(--primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    opacity: 0.9;
+  }
 
-	.card-title {
-		margin: 0 0 0.75rem 0;
-		font-size: 1.1rem;
-		font-weight: 700;
-		line-height: 1.3;
-		color: #ffffff;
-	}
+  .card-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #ffffff;
+  }
 
-	.card-body {
-		margin: 0 0 1rem 0;
-		font-size: 0.9rem;
-		line-height: 1.5;
-		color: #ffffff;
-		opacity: 0.85;
-	}
+  .card-body {
+    margin: 0 0 1rem 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #ffffff;
+    opacity: 0.85;
+  }
 
-	.card-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-top: 1rem;
-	}
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
 
-	.tag {
-		font-size: 0.75rem;
-		color: var(--primary);
-		font-family: "Courier New", monospace;
-		font-weight: 600;
-		background: none;
-		padding: 0.2rem 0.5rem;
-		border-radius: 0;
-		border: 1px solid var(--primary);
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-		transition: all 0.2s ease;
-	}
+  .tag {
+    font-size: 0.75rem;
+    color: var(--primary);
+    font-family: "Courier New", monospace;
+    font-weight: 600;
+    background: none;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0;
+    border: 1px solid var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+  }
 
-	/* .tag:hover {
+  /* .tag:hover {
 		background: var(--primary);
 		color: #0f1419;
 	} */
 
-	@media (max-width: 720px) {
-		.featured-card {
-			flex: none;
-			width: 100%;
-		}
+  @media (max-width: 720px) {
+    .featured-card {
+      flex: none;
+      width: 100%;
+    }
 
-		.featured-card a {
-			padding: 1.2rem;
-		}
+    .featured-card a {
+      padding: 1.2rem;
+    }
 
-		.card-header {
-			margin-bottom: 0.75rem;
-		}
+    .card-header {
+      margin-bottom: 0.75rem;
+    }
 
-		.card-title {
-			font-size: 1rem;
-		}
+    .card-title {
+      font-size: 1rem;
+    }
 
-		.card-body {
-			font-size: 0.85rem;
-		}
-	}
+    .card-body {
+      font-size: 0.85rem;
+    }
+  }
 </style>

@@ -6,11 +6,11 @@ import Header from "../../components/base/Header.astro";
 import FormattedDate from "../../components/blog/FormattedDate.astro";
 
 export async function getStaticPaths() {
-	const posts = await getCollection("blog");
-	return posts.map((post) => ({
-		params: { slug: post.slug },
-		props: post,
-	}));
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
 }
 type Props = CollectionEntry<"blog">;
 
@@ -20,92 +20,96 @@ const { title, description, pubDate, updatedDate, heroImage } = post.data;
 ---
 
 <Layout title={title} description={description}>
-	<main>
-		<Header />
-		<article>
-			<div class="hero-image">
-				{
-					heroImage && (
-						<img width={1020} height={510} src={heroImage} alt="" />
-					)
-				}
-			</div>
-			<div class="prose">
-				<div class="title">
-					<div class="date">
-						<FormattedDate date={pubDate} />
-						{
-							updatedDate && (
-								<div class="last-updated-on">
-									Last updated on{" "}
-									<FormattedDate date={updatedDate} />
-								</div>
-							)
-						}
-						•
-						<span>{remarkPluginFrontmatter.minutesRead}</span>
-					</div>
-					<h1>{title}</h1>
-				</div>
-				<Content />
-			</div>
-		</article>
-	</main>
+  <main>
+    <Header />
+    <article>
+      <div class="hero-image">
+        {
+          heroImage && (
+            <img
+              width={1020}
+              height={510}
+              src={heroImage}
+              alt={title + " blog hero image"}
+            />
+          )
+        }
+      </div>
+      <div class="prose">
+        <div class="title">
+          <div class="date">
+            <FormattedDate date={pubDate} />
+            {
+              updatedDate && (
+                <div class="last-updated-on">
+                  Last updated on <FormattedDate date={updatedDate} />
+                </div>
+              )
+            }
+            •
+            <span>{remarkPluginFrontmatter.minutesRead}</span>
+          </div>
+          <h1>{title}</h1>
+        </div>
+        <Content />
+      </div>
+    </article>
+  </main>
 </Layout>
 <style>
-	main {
-		width: calc(100% - 2em);
-		max-width: 100%;
-		margin: 0;
-	}
-	:global(.prose h1),
-	:global(.prose h2),
-	:global(.prose h3),
-	:global(.prose h4),
-	:global(.prose h5),
-	:global(.prose h6),
-	:global(.prose p:not(:has(img))),
-	:global(.prose blockquote),
-	:global(.prose pre),
-	:global(.prose ul),
-	:global(.prose ol),
-	:global(.prose li) {
-		width: var(--content-width);
-	}
-	.title h1 {
-		width: 100%;
-	}
-	.hero-image {
-		width: 100%;
-	}
-	.hero-image img {
-		display: block;
-		margin: 0 auto;
-		border-radius: 12px;
-		box-shadow: var(--box-shadow);
-	}
-	.prose {
-		width: 1020px;
-		max-width: calc(100% - 2em);
-		margin: auto;
-		padding: 1em;
-		color: rgb(var(--gray-dark));
-	}
-	.title {
-		margin-bottom: 1em;
-		padding: 1em 0;
-		text-align: center;
-		line-height: 1;
-	}
-	.title h1 {
-		font-size: 2.15rem;
-		margin: 0 0 0.5em 0;
-	}
-	.date {
-		margin-bottom: 0.5em;
-		color: rgb(var(--gray));
-	}
-	.last-updated-on {
-		font-style: italic;
-	}
+  main {
+    width: calc(100% - 2em);
+    max-width: 100%;
+    margin: 0;
+  }
+  :global(.prose h1),
+  :global(.prose h2),
+  :global(.prose h3),
+  :global(.prose h4),
+  :global(.prose h5),
+  :global(.prose h6),
+  :global(.prose p:not(:has(img))),
+  :global(.prose blockquote),
+  :global(.prose pre),
+  :global(.prose ul),
+  :global(.prose ol),
+  :global(.prose li) {
+    width: var(--content-width);
+  }
+  .title h1 {
+    width: 100%;
+  }
+  .hero-image {
+    width: 100%;
+  }
+  .hero-image img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+  }
+  .prose {
+    width: 1020px;
+    max-width: calc(100% - 2em);
+    margin: auto;
+    padding: 1em;
+    color: rgb(var(--gray-dark));
+  }
+  .title {
+    margin-bottom: 1em;
+    padding: 1em 0;
+    text-align: center;
+    line-height: 1;
+  }
+  .title h1 {
+    font-size: 2.15rem;
+    margin: 0 0 0.5em 0;
+  }
+  .date {
+    margin-bottom: 0.5em;
+    color: rgb(var(--gray));
+  }
+  .last-updated-on {
+    font-style: italic;
+  }
 </style>

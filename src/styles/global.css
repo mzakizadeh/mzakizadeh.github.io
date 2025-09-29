@@ -5,51 +5,51 @@
  */
 
 :root {
-    --primary: #1BFF13;
-    --primary-variant: #32932f;
-    --secondary: #43E8E3;
-    --black: #000000;
+  --primary: #1BFF13;
+  --primary-variant: #32932f;
+  --secondary: #43E8E3;
+  --black: #000000;
 
-    --page-width: 100%;
-    --content-width: 90%;
+  --page-width: 100%;
+  --content-width: 90%;
 
-    @media (min-width: 768px) {
-        --page-width: 1020px;
-        --content-width: 720px;
-    }
+  @media (min-width: 768px) {
+    --page-width: 1020px;
+    --content-width: 720px;
+  }
 }
 
 ::-moz-selection {
-    /* Code for Firefox */
-    color: black;
-    background: var(--primary);
+  /* Code for Firefox */
+  color: black;
+  background: var(--primary);
 }
 
 ::selection {
-    color: black;
-    background: var(--primary);
+  color: black;
+  background: var(--primary);
 }
 
 body {
-    font-family: 'Space Mono', sans-serif;
-    margin: 0;
-    padding: 0;
-    text-align: left;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    font-size: 20px;
-    line-height: 1.7;
-    color: white;
+  font-family: 'Space Mono', sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-size: 20px;
+  line-height: 1.7;
+  color: white;
 }
 
 main {
-    margin: auto;
-    padding: 1rem;
-    width: 800px;
-    max-width: calc(100% - 2rem);
-    color: white;
-    font-size: 20px;
-    line-height: 1.6;
+  margin: auto;
+  padding: 1rem;
+  width: 800px;
+  max-width: calc(100% - 2rem);
+  color: white;
+  font-size: 20px;
+  line-height: 1.6;
 }
 
 h1,
@@ -58,9 +58,9 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0 auto 0.5rem auto;
-    color: rgb(var(--black));
-    line-height: 1.2;
+  margin: 0 auto 0.5rem auto;
+  color: rgb(var(--black));
+  line-height: 1.2;
 }
 
 h1,
@@ -75,101 +75,101 @@ pre,
 ul,
 ol,
 li {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 p:has(img) {
-    text-align: center;
+  text-align: center;
 }
 
 
 h1 {
-    font-size: 2.852em;
+  font-size: 2.852em;
 }
 
 h2 {
-    font-size: 2.241em;
+  font-size: 2.241em;
 }
 
 h3 {
-    font-size: 1.753em;
+  font-size: 1.753em;
 }
 
 h4 {
-    font-size: 1.363em;
+  font-size: 1.363em;
 }
 
 h5 {
-    font-size: 1.05em;
+  font-size: 1.05em;
 }
 
 strong,
 b {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 a {
-    color: var(--primary);
+  color: var(--primary);
 }
 
 a:hover {
-    color: var(--primary);
+  color: var(--primary);
 }
 
 a:active {
-    color: var(--secondary);
+  color: var(--secondary);
 }
 
 p {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 .prose p {
-    margin-bottom: 2em;
+  margin-bottom: 2em;
 }
 
 textarea {
-    width: 100%;
-    font-size: 16px;
+  width: 100%;
+  font-size: 16px;
 }
 
 input {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 table {
-    width: 100%;
+  width: 100%;
 }
 
 img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
 code {
-    padding: 2px 5px;
-    background-color: rgb(var(--gray-light));
-    border-radius: 2px;
+  padding: 2px 5px;
+  background-color: rgb(var(--gray-light));
+  border-radius: 2px;
 }
 
 pre {
-    padding: 1.5em;
-    border-radius: 8px;
+  padding: 1.5em;
+  border-radius: 8px;
 }
 
 pre>code {
-    all: unset;
+  all: unset;
 }
 
 blockquote {
-    border-left: 4px solid var(--primary);
-    padding: 0 0 0 20px;
-    font-size: 1.333em;
+  border-left: 4px solid var(--primary);
+  padding: 0 0 0 20px;
+  font-size: 1.333em;
 }
 
 hr {
-    border: none;
-    border-top: 1px solid white;
+  border: none;
+  border-top: 1px solid white;
 }
