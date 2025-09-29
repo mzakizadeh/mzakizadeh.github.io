@@ -28,11 +28,11 @@ export function remarkReadingTime() {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://mzakizadeh.me',
+  site: 'https://mzakizadeh.com',
   integrations: [
     preact(),
     mdx(),
-    sitemap({ filter: (page) => !page.startsWith('https://mzakizadeh.me/blog') }),
+    sitemap({ filter: (page) => !page.startsWith('https://mzakizadeh.com/blog') }),
     partytown({ config: { forward: ["dataLayer.push"] } }),
   ],
   markdown: {
