@@ -3,8 +3,8 @@ import BaseHead from "../components/base/BaseHead.astro";
 import Footer from "../components/base/Footer.astro";
 
 interface Props {
-	title: string;
-	description: string;
+  title: string;
+  description: string;
 }
 
 const { title, description } = Astro.props;
@@ -12,68 +12,69 @@ const { title, description } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
+  <head>
+    <BaseHead title={title} description={description} />
 
-		<!-- Google tag (gtag.js) -->
-		{!import.meta.env.DEV && (
-			<>
-				<script
-					async
-					type="text/partytown"
-					src="https://www.googletagmanager.com/gtag/js?id=G-T3CRS9PGXV"
-				></script>
-				<script is:inline type="text/partytown">
-					window.dataLayer = window.dataLayer || [];
-					function gtag() {
-						dataLayer.push(arguments);
-					}
-					gtag("js", new Date());
+    <!-- Google tag (gtag.js) -->
+    {!import.meta.env.DEV && (
+      <>
+        <script
+          async
+          type="text/partytown"
+          src="https://www.googletagmanager.com/gtag/js?id=G-T3CRS9PGXV"
+        ></script>
+        <script is:inline type="text/partytown">
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag("js", new Date());
 
-					gtag("config", "G-T3CRS9PGXV");
-				</script>
-			</>
-		)}
+          gtag("config", "G-T3CRS9PGXV");
+        </script>
+      </>
+    )}
 
-		<!-- Microsoft clarity -->
-		{!import.meta.env.DEV && (
-			<script type="text/javascript">
-				(function (c, l, a, r, i, t, y) {
-					c[a] =
-						c[a] ||
-						function () {
-							(c[a].q = c[a].q || []).push(arguments);
-						};
-					t = l.createElement(r);
-					t.async = 1;
-					t.src = "https://www.clarity.ms/tag/" + i;
-					y = l.getElementsByTagName(r)[0];
-					y.parentNode.insertBefore(t, y);
-				})(window, document, "clarity", "script", "pyvmxgfnbi");
-			</script>
-		)}
-	</head>
-	<body>
-		<slot />
-		<Footer />
-	</body>
+    <!-- Microsoft clarity -->
+    {!import.meta.env.DEV && (
+      <script type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+          c[a] =
+            c[a] ||
+            function () {
+              (c[a].q = c[a].q || []).push(arguments);
+            };
+          t = l.createElement(r);
+          t.async = 1;
+          t.src = "https://www.clarity.ms/tag/" + i;
+          y = l.getElementsByTagName(r)[0];
+          y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "pyvmxgfnbi");
+      </script>
+    )}
+  </head>
+  <body>
+    <slot />
+    <Footer />
+  </body>
 </html>
 <style is:global>
-	html {
+  html {
 		font-family: system-ui, sans-serif;
 		background-color: var(--black);
 		background-image: linear-gradient(color-mix(in srgb, var(--primary) 8%, transparent) 1px, transparent 1px), linear-gradient(to right, color-mix(in srgb, var(--primary) 8%, transparent) 1px, var(--black) 1px);
 		background-size: 20px 20px;
 	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
+
+  code {
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
 </style>
