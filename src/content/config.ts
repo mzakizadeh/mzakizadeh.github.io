@@ -32,8 +32,25 @@ const featuredCollection = defineCollection({
   }),
 });
 
+const talksCollection = defineCollection({
+  type: 'data',
+  schema: z.object({
+    title: z.string(),
+    venue: z.string(),
+    date: z.coerce.date(),
+    type: z.enum(['poster', 'talk']),
+    description: z.string().optional(),
+    slides: z.string().optional(),
+    video: z.string().optional(),
+    poster: z.string().optional(),
+    image: z.string().optional(),
+    link: z.string().optional(),
+  }),
+});
+
 export const collections = {
   'diary': diaryCollection,
   'blog': blogCollection,
   'featured': featuredCollection,
+  'talks': talksCollection,
 };

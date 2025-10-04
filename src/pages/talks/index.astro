@@ -1,0 +1,251 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/base/Header.astro";
+import { MY_NAME } from "../../consts";
+import { getCollection } from "astro:content";
+
+const allTalks = (await getCollection("talks")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const posters = allTalks.filter((talk) => talk.data.type === "poster");
+const talks = allTalks.filter((talk) => talk.data.type === "talk");
+
+function formatDate(date: Date) {
+  const month = new Intl.DateTimeFormat("en", { month: "short" }).format(date);
+  const year = date.getFullYear().toString().slice(-2);
+  return `[${month} '${year}]`;
+}
+---
+
+<Layout
+  title={`Talks - ${MY_NAME}`}
+  description="Presentations and talks by Mahdi Zakizadeh"
+>
+  <main>
+    <Header />
+    <div class="talks-page">
+      <!-- Posters Section -->
+      <section>
+        <h2 class="section-header">Posters</h2>
+        <ul class="posters-list">
+          {
+            posters.map((talk) => (
+              <li>
+                <span class="date">{formatDate(talk.data.date)}</span>
+                <div class="content">
+                  <strong>{talk.data.title}</strong> — {talk.data.venue}
+                  {talk.data.poster && (
+                    <div class="links">
+                      <a href={talk.data.poster} target="_blank">
+                        poster
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <!-- Talks Section -->
+      <section>
+        <h2 class="section-header">Talks</h2>
+        <ul>
+          {
+            talks.map((talk) => (
+              <li>
+                <span class="date">{formatDate(talk.data.date)}</span>
+                <div class="content">
+                  <div class="title">
+                    <strong>{talk.data.title}</strong>
+                  </div>
+                  <!-- prettier-ignore -->
+                  <div class="venue">
+                    {talk.data.venue}{talk.data.description && (
+                      <span class="desc">, {talk.data.description}</span>
+                    )}
+                  </div>
+                  {(talk.data.slides || talk.data.video || talk.data.link) && (
+                    <div class="links">
+                      {talk.data.slides && (
+                        <>
+                          <a href={talk.data.slides} target="_blank">
+                            slides
+                          </a>
+                        </>
+                      )}
+                      {talk.data.slides &&
+                        (talk.data.video || talk.data.link) && (
+                          <span class="separator"> | </span>
+                        )}
+                      {talk.data.video && (
+                        <>
+                          <a href={talk.data.video} target="_blank">
+                            video
+                          </a>
+                        </>
+                      )}
+                      {talk.data.video && talk.data.link && (
+                        <span class="separator"> | </span>
+                      )}
+                      {talk.data.link && (
+                        <>
+                          <a href={talk.data.link} target="_blank">
+                            list
+                          </a>
+                        </>
+                      )}
+                    </div>
+                  )}
+                  {talk.data.image && (
+                    <div class="image-container">
+                      <img src={talk.data.image} alt={talk.data.title} />
+                    </div>
+                  )}
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  section {
+    margin-bottom: 3rem;
+  }
+
+  section:first-of-type {
+    margin-top: 1rem;
+  }
+
+  .section-header {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+  }
+
+  .section-header::after {
+    content: "¬";
+    padding-left: 0.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0;
+    padding-bottom: 1.2rem;
+  }
+
+  li:last-child {
+    padding-bottom: 0;
+  }
+
+  .date {
+    color: var(--primary);
+    min-width: 6.2rem;
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+
+  .content {
+    flex: 1;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+    font-size: 1rem;
+  }
+
+  .content .title {
+    margin-bottom: 0.2rem;
+  }
+
+  .content strong {
+    color: white;
+    font-weight: 600;
+  }
+
+  .content .venue {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.3rem;
+  }
+
+  .desc {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .links {
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+  }
+
+  .image-container {
+    margin-top: 0.8rem;
+  }
+
+  .content img {
+    width: 100%;
+    max-width: 600px;
+    border: 2px solid var(--primary);
+    border-radius: 4px;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+  }
+
+  .content img:hover {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(27, 255, 19, 0.3);
+  }
+
+  a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--secondary);
+  }
+
+  @media (max-width: 720px) {
+    section:first-of-type {
+      margin-top: 0.5rem;
+    }
+
+    .section-header {
+      font-size: 1.1rem;
+    }
+
+    li {
+      flex-direction: column;
+      gap: 0.3rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .date {
+      min-width: auto;
+      font-size: 0.9rem;
+    }
+
+    .content {
+      font-size: 0.95rem;
+    }
+
+    .content img {
+      max-width: 100%;
+    }
+  }
+</style>
