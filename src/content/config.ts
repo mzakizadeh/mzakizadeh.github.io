@@ -43,7 +43,15 @@ const talksCollection = defineCollection({
     slides: z.string().optional(),
     video: z.string().optional(),
     poster: z.string().optional(),
-    image: z.string().optional(),
+    album: z.array(
+      z.union([
+        z.string(),
+        z.object({
+          src: z.string(),
+          caption: z.string().optional(),
+        })
+      ])
+    ).optional(),
     link: z.string().optional(),
   }),
 });

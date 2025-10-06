@@ -11,6 +11,23 @@ const allTalks = (await getCollection("talks")).sort(
 const posters = allTalks.filter((talk) => talk.data.type === "poster");
 const talks = allTalks.filter((talk) => talk.data.type === "talk");
 
+// Collect all photos from album fields
+const allPhotos = allTalks
+  .filter((talk) => talk.data.album && talk.data.album.length > 0)
+  .flatMap((talk) => 
+    talk.data.album!.map((photo) => {
+      const isObject = typeof photo === 'object';
+      return {
+        src: isObject ? photo.src : photo,
+        caption: isObject ? photo.caption : undefined,
+        title: talk.data.title,
+        venue: talk.data.venue,
+        date: talk.data.date,
+      };
+    })
+  )
+  .sort((a, b) => b.date.valueOf() - a.date.valueOf());
+
 function formatDate(date: Date) {
   const month = new Intl.DateTimeFormat("en", { month: "short" }).format(date);
   const year = date.getFullYear().toString().slice(-2);
@@ -99,17 +116,32 @@ function formatDate(date: Date) {
                       )}
                     </div>
                   )}
-                  {talk.data.image && (
-                    <div class="image-container">
-                      <img src={talk.data.image} alt={talk.data.title} />
-                    </div>
-                  )}
                 </div>
               </li>
             ))
           }
         </ul>
       </section>
+
+      <!-- Photo Gallery Section -->
+      {allPhotos.length > 0 && (
+        <section>
+          <h2 class="section-header">Photos</h2>
+          <div class="photo-gallery">
+            {allPhotos.map((photo) => (
+              <div class="photo-item">
+                <img src={photo.src} alt={photo.caption || photo.title} />
+                {(photo.caption || photo.venue) && (
+                  <div class="photo-caption">
+                    {photo.caption && <p class="caption-text">{photo.caption}</p>}
+                    {!photo.caption && <p class="caption-context">{photo.venue}</p>}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   </main>
 </Layout>
@@ -192,22 +224,51 @@ function formatDate(date: Date) {
     margin-top: 0.3rem;
   }
 
-  .image-container {
-    margin-top: 0.8rem;
+  .photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
   }
 
-  .content img {
+  .photo-item {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .photo-item img {
     width: 100%;
-    max-width: 600px;
-    border: 2px solid var(--primary);
-    border-radius: 4px;
-    opacity: 0.9;
-    transition: all 0.3s ease;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
-  .content img:hover {
-    opacity: 1;
-    box-shadow: 0 0 20px rgba(27, 255, 19, 0.3);
+  .photo-caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    border-radius: 4px;
+    width: fit-content;
+    max-width: calc(100% - 1rem);
+  }
+
+  .caption-text {
+    color: white;
+    font-size: 0.75rem;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .caption-context {
+    color: var(--primary);
+    font-size: 0.7rem;
+    margin: 0;
+    font-style: italic;
   }
 
   a {
@@ -244,8 +305,8 @@ function formatDate(date: Date) {
       font-size: 0.95rem;
     }
 
-    .content img {
-      max-width: 100%;
+    .photo-gallery {
+      grid-template-columns: 1fr;
     }
   }
 </style>

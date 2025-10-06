@@ -2,5 +2,7 @@ title: "Bias and Fairness Research Topics in Natural Language Processing"
 venue: "TEIAS NLP Course 2021"
 date: 2021-12-22
 type: "talk"
-image: "/images/2025-10-04_nlp00.jpg"
+album:
+  - src: "/images/2025-10-04_nlp00.jpg"
+    caption: "Presenting in class on bias and fairness in NLP; TEIAS; December 2021"
 slides: "https://drive.google.com/file/d/1hWm5uBGxCv-WX-611uBV2VhhNkBkG4gI/view?usp=drive_link"
