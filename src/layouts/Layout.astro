@@ -1,6 +1,7 @@
 ---
 import BaseHead from "../components/base/BaseHead.astro";
 import Footer from "../components/base/Footer.astro";
+import CookieConsent from "../components/base/CookieConsent.astro";
 
 interface Props {
   title: string;
@@ -56,6 +57,7 @@ const { title, description } = Astro.props;
   <body>
     <slot />
     <Footer />
+    <CookieConsent />
   </body>
 </html>
 <style is:global>

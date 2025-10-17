@@ -88,9 +88,7 @@ function formatDate(date: Date) {
                     <div class="links">
                       {talk.data.slides && (
                         <>
-                          <a href={talk.data.slides} target="_blank">
-                            slides
-                          </a>
+                          <a href={talk.data.slides} target="_blank">slides</a>
                         </>
                       )}
                       {talk.data.slides &&
@@ -273,11 +271,11 @@ function formatDate(date: Date) {
 
   a {
     color: var(--primary);
-    text-decoration: none;
+    text-decoration: underline;
   }
 
   a:hover {
-    color: var(--secondary);
+    /* color: var(--secondary); */
   }
 
   @media (max-width: 720px) {

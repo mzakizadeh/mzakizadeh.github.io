@@ -1,0 +1,122 @@
+---
+
+---
+
+<div id="cookie-consent" class="cookie-consent">
+  <div class="cookie-content">
+    <p>
+      This website uses cookies to improve your experience and understand how
+      you interact with the site.
+    </p>
+    <button id="accept-cookies" class="accept-btn">Accept</button>
+  </div>
+</div>
+
+<script>
+  function initCookieConsent() {
+    const cookieConsent = document.getElementById("cookie-consent");
+    const acceptBtn = document.getElementById("accept-cookies");
+
+    // Check if user has already accepted
+    const hasAccepted = localStorage.getItem("cookieConsent");
+
+    if (!hasAccepted) {
+      cookieConsent?.classList.add("show");
+    }
+
+    acceptBtn?.addEventListener("click", () => {
+      localStorage.setItem("cookieConsent", "true");
+      cookieConsent?.classList.remove("show");
+    });
+  }
+
+  // Run on page load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCookieConsent);
+  } else {
+    initCookieConsent();
+  }
+</script>
+
+<style>
+  .cookie-consent {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    max-width: 400px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--primary);
+    padding: 1.5rem;
+    opacity: 0;
+    transform: translateX(-120%);
+    transition: all 0.4s ease;
+    z-index: 9999;
+    box-shadow: 0 0 20px rgba(27, 255, 19, 0.15);
+    font-family: "Space Mono", sans-serif;
+  }
+
+  .cookie-consent.show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .cookie-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cookie-content p {
+    margin: 0 0 1.25rem 0;
+    color: #ffffff;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .accept-btn {
+    width: 100%;
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: "Space Mono", sans-serif;
+  }
+
+  .accept-btn:hover {
+    background: var(--primary);
+    color: #000000;
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--primary), transparent 70%);
+    transform: translateY(-2px);
+  }
+
+  .accept-btn:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .cookie-consent {
+      bottom: 1rem;
+      left: 1rem;
+      right: 1rem;
+      max-width: calc(100% - 2rem);
+      padding: 1.25rem;
+    }
+
+    .cookie-content p {
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .accept-btn {
+      padding: 0.7rem 1.2rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>
