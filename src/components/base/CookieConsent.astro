@@ -60,12 +60,14 @@
     }
 
     function applyPreferences(preferences) {
-      // Handle Microsoft Clarity
-      if (preferences.analytics) {
-        if (typeof window.clarity === "function") {
-          window.clarity("consent");
-          if (isDev) console.log("Clarity consent granted");
-        }
+      // Handle Microsoft Clarity using Consent API v2 (recommended)
+      if (typeof window.clarity === "function") {
+        const consentState = preferences.analytics ? "granted" : "denied";
+        window.clarity("consentv2", {
+          ad_storage: consentState,
+          analytics_storage: consentState,
+        });
+        if (isDev) console.log(`Clarity consent granted`);
       }
 
       // Handle Google Analytics
