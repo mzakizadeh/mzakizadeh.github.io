@@ -4,30 +4,87 @@
 
 <div id="cookie-consent" class="cookie-consent">
   <div class="cookie-content">
-    <p>
-      This website uses cookies to improve your experience and understand how
-      you interact with the site.
+    <h3 class="cookie-title">Cookie Preferences</h3>
+    <p class="cookie-description">
+      I use cookies to improve your experience and analyze site usage.
     </p>
-    <button id="accept-cookies" class="accept-btn">Accept</button>
+
+    <div class="cookie-buttons">
+      <button id="accept-all" class="btn-primary">Accept</button>
+      <button id="reject-all" class="btn-secondary">Reject</button>
+    </div>
   </div>
 </div>
 
-<script>
+<script define:vars={{ isDev: import.meta.env.DEV }}>
   function initCookieConsent() {
     const cookieConsent = document.getElementById("cookie-consent");
-    const acceptBtn = document.getElementById("accept-cookies");
+    const acceptAllBtn = document.getElementById("accept-all");
+    const rejectAllBtn = document.getElementById("reject-all");
 
-    // Check if user has already accepted
-    const hasAccepted = localStorage.getItem("cookieConsent");
+    // Check if user has already made a choice
+    const cookiePreferences = localStorage.getItem("cookiePreferences");
 
-    if (!hasAccepted) {
+    if (!cookiePreferences) {
       cookieConsent?.classList.add("show");
+    } else {
+      // Apply saved preferences
+      applyPreferences(JSON.parse(cookiePreferences));
     }
 
-    acceptBtn?.addEventListener("click", () => {
-      localStorage.setItem("cookieConsent", "true");
-      cookieConsent?.classList.remove("show");
+    // Accept all cookies
+    acceptAllBtn?.addEventListener("click", () => {
+      const preferences = {
+        necessary: true,
+        analytics: true,
+        timestamp: new Date().toISOString(),
+      };
+      saveAndApplyPreferences(preferences);
     });
+
+    // Reject all optional cookies
+    rejectAllBtn?.addEventListener("click", () => {
+      const preferences = {
+        necessary: true,
+        analytics: false,
+        timestamp: new Date().toISOString(),
+      };
+      saveAndApplyPreferences(preferences);
+    });
+
+    function saveAndApplyPreferences(preferences) {
+      localStorage.setItem("cookiePreferences", JSON.stringify(preferences));
+      localStorage.setItem("cookieConsent", "true"); // Legacy support
+      cookieConsent?.classList.remove("show");
+      applyPreferences(preferences);
+    }
+
+    function applyPreferences(preferences) {
+      // Handle Microsoft Clarity
+      if (preferences.analytics) {
+        if (typeof window.clarity === "function") {
+          window.clarity("consent");
+          if (isDev) console.log("Clarity consent granted");
+        }
+      }
+
+      // Handle Google Analytics
+      if (preferences.analytics) {
+        if (typeof window.gtag === "function") {
+          window.gtag("consent", "update", {
+            analytics_storage: "granted",
+          });
+          if (isDev) console.log("Google Analytics consent granted");
+        }
+      } else {
+        if (typeof window.gtag === "function") {
+          window.gtag("consent", "update", {
+            analytics_storage: "denied",
+          });
+          if (isDev) console.log("Google Analytics consent denied");
+        }
+      }
+    }
   }
 
   // Run on page load
@@ -43,8 +100,8 @@
     position: fixed;
     bottom: 2rem;
     left: 2rem;
-    max-width: 400px;
-    background: rgba(0, 0, 0, 0.85);
+    max-width: 350px;
+    background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(10px);
     border: 2px solid var(--primary);
     padding: 1.5rem;
@@ -66,38 +123,61 @@
     z-index: 1;
   }
 
-  .cookie-content p {
-    margin: 0 0 1.25rem 0;
-    color: #ffffff;
-    font-size: 0.85rem;
-    line-height: 1.6;
-    opacity: 0.9;
-  }
-
-  .accept-btn {
-    width: 100%;
-    background: transparent;
+  .cookie-title {
+    margin: 0 0 0.5rem 0;
     color: var(--primary);
-    border: 2px solid var(--primary);
-    padding: 0.75rem 1.5rem;
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-family: "Space Mono", sans-serif;
   }
 
-  .accept-btn:hover {
+  .cookie-description {
+    margin: 0 0 1.25rem 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .cookie-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cookie-buttons button {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: "Space Mono", sans-serif;
+    border: 2px solid var(--primary);
+    box-sizing: border-box;
+  }
+
+  .btn-primary {
     background: var(--primary);
     color: #000000;
-    box-shadow: 0 4px 16px color-mix(in srgb, var(--primary), transparent 70%);
-    transform: translateY(-2px);
   }
 
-  .accept-btn:active {
-    transform: translateY(0);
+  .btn-primary:hover {
+    opacity: 0.8;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--primary);
+  }
+
+  .btn-secondary:hover {
+    opacity: 0.8;
+  }
+
+  .cookie-buttons button:active {
+    opacity: 1;
   }
 
   @media (max-width: 768px) {
@@ -109,14 +189,22 @@
       padding: 1.25rem;
     }
 
-    .cookie-content p {
-      font-size: 0.8rem;
+    .cookie-title {
+      font-size: 0.9rem;
+    }
+
+    .cookie-description {
+      font-size: 0.75rem;
       margin-bottom: 1rem;
     }
 
-    .accept-btn {
-      padding: 0.7rem 1.2rem;
-      font-size: 0.8rem;
+    .cookie-buttons {
+      gap: 0.6rem;
+    }
+
+    .cookie-buttons button {
+      padding: 0.6rem 1rem;
+      font-size: 0.7rem;
     }
   }
 </style>
