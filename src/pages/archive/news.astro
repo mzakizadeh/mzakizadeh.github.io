@@ -130,6 +130,7 @@ const renderedEntries = await Promise.all(
   }
   .news ul li .date {
     color: var(--primary);
+    flex: 0;
     min-width: 7rem;
     font-size: 1rem;
     flex-shrink: 0;
@@ -138,6 +139,7 @@ const renderedEntries = await Promise.all(
   .news ul li :global(> *) {
     margin-top: 0;
     line-height: 1.5;
+    flex: 1;
   }
   .news ul li :global(p:first-child) {
     margin-top: 0;

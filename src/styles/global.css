@@ -118,7 +118,8 @@ a:hover {
 }
 
 a:active {
-  color: var(--secondary);
+  color: var(--black) !important;
+  background-color: var(--secondary);
 }
 
 p {
